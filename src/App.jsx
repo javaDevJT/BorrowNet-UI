@@ -12,6 +12,7 @@ import NewProfilePage from './pages/NewProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
+import MainLayout from './layouts/MainLayout';
 
 
 const App = () => {
@@ -29,13 +30,7 @@ const App = () => {
     )
   );
 
-  return (
-    <>
-      <Hello name="Marta and Riccardo"/>
-      <Hello />
-    </>
-
-  )
+  return <RouterProvider router={router} />;
 }
 
 export default App
