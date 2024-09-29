@@ -1,12 +1,15 @@
+import { Container } from '@mui/material'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
+
 const MainLayout = () => {
   return (
-    <>
-      <div>MainLayout</div>
+    <Container
+    sx={{ bgcolor: "secondary.main" , padding: 2 }}
+    >
       <Outlet/>
-    </>
+    </Container>
   )
 }
 
