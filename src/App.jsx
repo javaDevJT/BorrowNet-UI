@@ -19,15 +19,18 @@ const App = () => {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path='/' element={<MainLayout />}>
+      <>
+        <Route path='/' element={<MainLayout />}>
+          <Route path='/new-profile' element={<NewProfilePage />} />
+          <Route path='/profile/:id' element={<ProfilePage />} />
+          <Route path='/edit-profile/:id' element={<EditProfilePage />} />
+          <Route path='/test' element={<TestingCSSPage />} />
+          <Route path='*' element={<NotFoundPage />} />
+        </Route>
         <Route path='/login' element={<LoginPage />} />
         <Route path='/registration' element={<RegistrationPage />} />
-        <Route path='/new-profile' element={<NewProfilePage />} />
-        <Route path='/profile/:id' element={<ProfilePage />} />
-        <Route path='/edit-profile/:id' element={<EditProfilePage />} />
-        <Route path='/test' element={<TestingCSSPage />} />
-        <Route path='*' element={<NotFoundPage />} />
-      </Route>
+      </>
+
     )
   );
 
