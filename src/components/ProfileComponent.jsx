@@ -6,9 +6,9 @@ const ProfileComponent = ({ user }) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-start",
+        display: {xs: "flex", sm: "flex", md: "flex", lg: "flex"},
+        flexDirection: {xs: "column", sm: "column", md: "row", lg: "row"},
+        justifyContent: {xs: "space-between", sm: "space-between", md: "flex-start", lg: "flex-start"},
       }}
     >
       <Paper 
@@ -16,6 +16,7 @@ const ProfileComponent = ({ user }) => {
         sx={{
           borderRadius: 4,
           maxWidth: '345px',
+          minWidth: '345px',
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -63,7 +64,6 @@ const ProfileComponent = ({ user }) => {
       </Paper>
       <Box
         sx={{
-
           m: 5,
         }}
       >
