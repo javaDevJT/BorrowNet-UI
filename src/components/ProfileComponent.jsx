@@ -41,7 +41,7 @@ const ProfileComponent = ({ user }) => {
           >
             X
           </Avatar>
-          <Typography variant='h5'>{user.first_name + ' ' + user.second_name + ', ' + user.age}</Typography>
+          <Typography variant='h5'>{user.first_name + ', ' + user.age}</Typography>
         </Box>
         <Box
           sx={{
@@ -67,7 +67,7 @@ const ProfileComponent = ({ user }) => {
           m: 5,
         }}
       >
-        <Typography variant='h2'>About Me</Typography>
+        <Typography variant='h3' sx={{ color: "primary.main"}}>About Me</Typography>
         <Typography>{user.description}</Typography>
       </Box>
 
