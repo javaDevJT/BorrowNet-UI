@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Card, CardContent, CardHeader, Grid2, Typography } from '@mui/material';
+import { Avatar, Card, CardContent, CardHeader, Grid2, Rating, Typography } from '@mui/material';
 import { red } from '@mui/material/colors';
 
 const ReviewsComponent = ({ reviews }) => {
@@ -32,8 +32,10 @@ const ReviewsComponent = ({ reviews }) => {
                                   {review.slice(0,1)}
                               </Avatar>
                               }
-                              title={review}
-                              subheader="September 14, 2016"
+                              //subheader={review}
+                              title={<Rating name="read-only" value='3' readOnly />}
+                              subheader='30 September 2024'
+                              
                           />
                           <CardContent>
                               <Typography>{reviewContent.slice(0,100)}</Typography>
