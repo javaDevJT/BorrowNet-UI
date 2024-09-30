@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Box, Button, Card, CardContent, CardHeader, Container, Grid2, Paper, Typography } from '@mui/material';
+import { Avatar, Card, CardContent, CardHeader, Grid2, Typography } from '@mui/material';
 import { red } from '@mui/material/colors';
 
 const ReviewsComponent = ({ reviews }) => {
@@ -15,15 +15,17 @@ const ReviewsComponent = ({ reviews }) => {
   return (  
     <React.Fragment>
       <Typography
-          variant="h2"
-          sx={{my: 4, textAlign: "center", color: "primary.main"}}
+          variant="h3"
+          sx={{my: 4, color: "primary.main"}}
           >
               Reviews
       </Typography>
           <Grid2 container spacing={3}>
               {reviewsList.map((review) => (
                   <Grid2 item size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                      <Card>
+                      <Card
+                        sx = {{borderRadius: 4}}
+                      >
                           <CardHeader
                               avatar={
                               <Avatar sx={{ bgcolor: red[500] }}>
@@ -34,7 +36,7 @@ const ReviewsComponent = ({ reviews }) => {
                               subheader="September 14, 2016"
                           />
                           <CardContent>
-                              <Typography>{reviewContent}</Typography>
+                              <Typography>{reviewContent.slice(0,100)}</Typography>
                           </CardContent>
                       </Card>
                   </Grid2>

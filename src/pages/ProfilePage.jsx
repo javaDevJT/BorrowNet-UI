@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import userData from '../data.json'
 import ProfileComponent from '../components/ProfileComponent';
 import ReviewsComponent from '../components/ReviewsComponent';
+import PostsComponent from '../components/PostsComponent';
+import { Box } from '@mui/material';
 
 const ProfilePage = () => {
   
@@ -17,10 +19,11 @@ const ProfilePage = () => {
 
 
   return (
-    <div>
+    <Box>
       <ProfileComponent user={user}/>
       <ReviewsComponent reviews={user.reviews}/>
-    </div>
+      <PostsComponent posts={user.reviews}/>
+    </Box>
   );
 }
 
