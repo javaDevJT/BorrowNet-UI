@@ -1,12 +1,12 @@
 import { AppBar, Box, Container, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
-import MailIcon from '@mui/icons-material/Mail';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 
 
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 
 
@@ -18,36 +18,31 @@ const MainLayout = () => {
     setOpen(newOpen);
   };
 
+  const navigate = useNavigate();
+
+  const redirectToMyProfilePage = () => {
+    navigate('/my-profile');
+  };
+
+  const logOut = () => {
+    //remove session cookie
+    navigate('/login');
+  };
+
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         <ListItem key='1' disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={redirectToMyProfilePage}>
             <ListItemIcon>
-              <MailIcon />
+              <AccountCircleIcon />
             </ListItemIcon>
-            <ListItemText primary='Filler' />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key='2' disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary='Filler' />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key='3' disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary='Filler' />
+            <ListItemText primary='My Profile' />
           </ListItemButton>
         </ListItem>
         <Divider />
         <ListItem key='4' disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={logOut}>
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
