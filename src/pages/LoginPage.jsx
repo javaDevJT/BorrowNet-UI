@@ -36,7 +36,7 @@ const LoginPage = () => {
           const data = await response.json();
           if (data.token) {
             localStorage.setItem('token', data.token);
-            navigate('/home'); // Handle successful login, e.g., navigate to homepage
+            navigate('/home'); // Navigate to homepage if login is successful
           } else {
             throw new Error('No token received');
           }

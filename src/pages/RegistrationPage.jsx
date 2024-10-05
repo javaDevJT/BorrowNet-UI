@@ -5,13 +5,14 @@ import { Button, TextField, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 // Validation schema for the registration using Yup
+// IMPORTANT: email must be unique
 const registrationSchema = object({
   first: string().required('Required'),
   last: string().required('Required'),
   date: date()
         .required('Required')
         .min(new Date('1900-01-01'), 'Invalid date')
-        .max(new Date('2006-12-31'), 'Invalid date'),
+        .max(new Date('2005-12-31'), 'Invalid date'),
   email: string().required('Required').email('Invalid email'),
   password: string()
             .min(8, 'Password must be at least 8 characters long')
@@ -28,16 +29,37 @@ const RegistrationPage = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
+      first: '',
+      last: '',
+      date: '',
       email: '',
       password: '',
     },
     validationSchema: registrationSchema,
     onSubmit: async (values) => {
       try {
-        
-        navigate ('/login');
+        const response = await fetch('/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+          throw new Error('Registration failed');
+        } else {
+          const data = await response.json();
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+            navigate ('/home');
+          } else {
+            throw new Error('No token received');
+          }
+        }
       } catch (error) {
-        // TODO: Handle registration error
+        console.error('Registration error:', error);
+        alert(error.message || 'Registration failed. Please check your information and try again.');
       }
     },
   });
