@@ -2,7 +2,7 @@ import React from 'react'
 import { Avatar, Card, CardContent, CardHeader, Grid2, Rating, Typography } from '@mui/material';
 import { red } from '@mui/material/colors';
 
-const ReviewsComponent = ({ reviews }) => {
+const ReviewsComponent = ({ user }) => {
 
   const reviewsList = ["John", "Emily", "Mike", "Henry", "Gerald", "Marta", "Mattia"];
   const reviewContent = `Niente è paragonabile. Esiste forse cosa
@@ -38,7 +38,7 @@ const ReviewsComponent = ({ reviews }) => {
                               
                           />
                           <CardContent>
-                              <Typography>{reviewContent.slice(0,100)}</Typography>
+                              <Typography>{reviewContent.slice(0,100) + " ..."}</Typography>
                           </CardContent>
                       </Card>
                   </Grid2>
