@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import NewProfilePage from './pages/NewProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import ProfilePage from './pages/ProfilePage';
+import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import TestingCSSPage from './pages/TestingCSSPage'
 import MainLayout from './layouts/MainLayout';
@@ -25,6 +26,7 @@ const App = () => {
           <Route path='/profile/:id' element={<ProfilePage />} />
           <Route path='/edit-profile/:id' element={<EditProfilePage />} />
           <Route path='/test' element={<TestingCSSPage />} />
+          <Route path='/home' element={<HomePage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
         <Route path='/login' element={<LoginPage />} />

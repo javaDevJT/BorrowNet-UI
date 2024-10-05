@@ -1,8 +1,11 @@
 import React from 'react'
+import { Alert } from '@mui/material'
 
 const NotFoundPage = () => {
   return (
-    <div>NotFoundPage</div>
+    <Alert variant="filled" severity="warning">
+      Page not found.
+    </Alert>
   )
 }
 
