@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
-import { Button, TextField, Box, Typography, Stack, Alert, AlertTitle } from '@mui/material';
+import { Button, TextField, Box, Typography, Stack, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 // Validation schema for the login using Yup
