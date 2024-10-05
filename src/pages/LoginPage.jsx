@@ -12,7 +12,7 @@ const loginSchema = object({
 
 // Login page component
 const LoginPage = () => {
-  const navigate = useNavigate(); // Hook to navigate between pages
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -20,18 +20,30 @@ const LoginPage = () => {
     },
     validationSchema: loginSchema,
     onSubmit: async (values) => {
-      // TODO: Add login logic here, email and password are in values.email and values.password and must be present
       try {
-        // Login API call
-        // const response = await api.login(values);
+        const response = await fetch('/auth/signin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
 
-       // const data = await response.json(); // Parse JSON response
+        if (!response.ok) {
+          throw new Error('Login failed');
+        } else {
+          const data = await response.json();
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+            navigate('/home'); // Handle successful login, e.g., navigate to homepage
+          } else {
+            throw new Error('No token received');
+          }
+        }
 
-        //localStorage.setItem('token', data.token);
-
-        navigate('/home'); // Handle successful login, e.g., navigate to homepage
       } catch (error) {
-        // TODO: Handle login error
+        console.error('Login error:', error);
+        alert(error.message || 'Login failed. Please check your credentials and try again.');
       }
     },
   });
@@ -57,6 +69,7 @@ const LoginPage = () => {
     >
       <Typography variant="h4">Login</Typography>
       <TextField
+        required
         fullWidth
         id="email"
         name="email"
@@ -71,6 +84,7 @@ const LoginPage = () => {
 
       <TextField
         fullWidth
+        required
         id="password"
         name="password"
         label="Password"
