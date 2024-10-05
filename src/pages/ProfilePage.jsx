@@ -21,8 +21,8 @@ const ProfilePage = () => {
   return (
     <Box>
       <ProfileComponent user={user}/>
-      <ReviewsComponent reviews={user.reviews}/>
-      <PostsComponent posts={user.reviews}/>
+      <ReviewsComponent reviews={user}/>
+      <PostsComponent posts={user}/>
     </Box>
   );
 }

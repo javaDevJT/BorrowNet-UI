@@ -2,6 +2,7 @@ import { AppBar, Box, Container, Divider, Drawer, IconButton, List, ListItem, Li
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import HomeIcon from '@mui/icons-material/Home';
 
 
 
@@ -23,6 +24,10 @@ const MainLayout = () => {
   const redirectToMyProfilePage = () => {
     navigate('/my-profile');
   };
+  
+  const redirectToHome = () => {
+    navigate('/');
+  };
 
   const logOut = () => {
     //remove session cookie
@@ -33,6 +38,14 @@ const MainLayout = () => {
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         <ListItem key='1' disablePadding>
+          <ListItemButton onClick={redirectToHome}>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary='Home' />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key='2' disablePadding>
           <ListItemButton onClick={redirectToMyProfilePage}>
             <ListItemIcon>
               <AccountCircleIcon />
