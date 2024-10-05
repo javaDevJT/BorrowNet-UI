@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
-import { Button, TextField, Box, Typography, Stack } from '@mui/material';
+import { Button, TextField, Box, Typography, Stack, Alert, AlertTitle } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 // Validation schema for the login using Yup
@@ -12,6 +12,7 @@ const loginSchema = object({
 
 // Login page component
 const LoginPage = () => {
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -43,13 +44,21 @@ const LoginPage = () => {
 
       } catch (error) {
         console.error('Login error:', error);
-        alert(error.message || 'Login failed. Please check your credentials and try again.');
+        setShowAlert(true);
+        //alert(error.message || 'Login failed. Please check your credentials and try again.');
       }
     },
   });
 
   return (
-    <Box
+    <React.Fragment>
+      {showAlert && (
+        <Alert severity="error" variant='filled' sx={{ p:2 }}>
+          Login failed. Incorrect email or password.
+        </Alert>
+        
+      )}
+      <Box
       component="form"
       onSubmit={formik.handleSubmit}
       sx={{
@@ -107,6 +116,8 @@ const LoginPage = () => {
           </Button>
       </Stack>
     </Box>
+    </React.Fragment>
+    
   );
 };
 
