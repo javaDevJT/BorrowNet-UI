@@ -76,7 +76,7 @@ const MainLayout = () => {
         {DrawerList}
       </Drawer>
       
-      <Container sx={{ bgcolor: "secondary.main" , padding: 2 }}>
+      <Container sx={{ bgcolor: "secondary.main" , padding: 2, my: 2 }}>
         <Outlet/>
       </Container>
     </React.Fragment>
