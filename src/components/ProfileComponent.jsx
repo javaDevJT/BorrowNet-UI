@@ -2,7 +2,7 @@ import { Avatar, Box, Card, CardContent, CardHeader, Paper, Typography } from '@
 import { red } from '@mui/material/colors'
 import React from 'react'
 
-const ProfileComponent = ({ user }) => {
+const ProfileComponent = ({ firstName, lastName, description, profilePicture }) => {
   return (
     <Box
       sx={{
@@ -32,16 +32,17 @@ const ProfileComponent = ({ user }) => {
             p:4
           }}
         >
-          <Avatar 
+          <Avatar
+            src={profilePicture} 
             sx={{ 
               bgcolor: red[500],
               width: 86, 
               height: 86,
             }}
           >
-            X
+            
           </Avatar>
-          <Typography variant='h5'>{user.first_name + ', ' + user.age}</Typography>
+          <Typography variant='h5'>{ firstName + ' ' + lastName}</Typography>
         </Box>
         <Box
           sx={{
@@ -68,7 +69,7 @@ const ProfileComponent = ({ user }) => {
         }}
       >
         <Typography variant='h3' sx={{ color: "primary.main"}}>About Me</Typography>
-        <Typography>{user.description}</Typography>
+        <Typography>{description}</Typography>
       </Box>
 
     </Box>
