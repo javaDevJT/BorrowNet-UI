@@ -49,10 +49,10 @@ const RegistrationPage = () => {
     validationSchema: registrationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await fetch('/auth/signup', {
+        const response = await fetch('/api/auth/signup', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(values),
         });
@@ -61,8 +61,8 @@ const RegistrationPage = () => {
           throw new Error('Registration failed');
         } else {
           const data = await response.json();
-          if (data.token) {
-            localStorage.setItem('token', data.token);
+          if (data.jwt) {
+            const token = localStorage.setItem('jwt', data.jwt);
             navigate ('/home');
           } else {
             throw new Error('No token received');

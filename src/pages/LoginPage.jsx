@@ -22,10 +22,10 @@ const LoginPage = () => {
     validationSchema: loginSchema, // Validation schema for the form
     onSubmit: async (values) => { // Submit handler
       try {
-        const response = await fetch('/auth/signin', { // Send login request
+        const response = await fetch('/api/auth/signin', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(values),
         });
@@ -34,8 +34,8 @@ const LoginPage = () => {
           throw new Error('Login failed');
         } else {
           const data = await response.json(); // Parse response data as JSON
-          if (data.token) {
-            localStorage.setItem('token', data.token); // If token is received, store it in local storage
+          if (data.jwt) {
+            localStorage.setItem('jwt', data.jwt); // If token is received, store it in local storage
             navigate('/home'); // Finally navigate to homepage
           } else {
             throw new Error('No token received');
