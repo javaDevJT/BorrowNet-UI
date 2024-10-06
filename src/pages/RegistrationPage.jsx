@@ -1,18 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { date, object, string } from 'yup';
 import { useFormik } from 'formik';
-import { Button, TextField, Box, Typography } from '@mui/material';
+import { Button, TextField, Box, Typography, Alert, InputAdornment, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import CheckIcon from '@mui/icons-material/Check';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 // Validation schema for the registration using Yup
-// IMPORTANT: email must be unique
 const registrationSchema = object({
-  first: string().required('Required'),
-  last: string().required('Required'),
-  date: date()
-        .required('Required')
-        .min(new Date('1900-01-01'), 'Invalid date')
-        .max(new Date('2005-12-31'), 'Invalid date'),
+  first: string()
+        .min(1, 'First name must be at least 1 character long')
+        .matches(/^[a-zA-Z]+$/, 'First name must contain only letters')
+        .required('Required'),
+  last: string()
+        .min(1, 'Last name must be at least 1 character long')
+        .matches(/^[a-zA-Z]+$/, 'Last name must contain only letters')
+        .required('Required'),
+  date: date().required('Required'),
   email: string().required('Required').email('Invalid email'),
   password: string()
             .min(8, 'Password must be at least 8 characters long')
@@ -26,6 +36,8 @@ const registrationSchema = object({
 
 // Registration page component
 const RegistrationPage = () => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -59,11 +71,20 @@ const RegistrationPage = () => {
         }
       } catch (error) {
         console.error('Registration error:', error);
-        alert(error.message || 'Registration failed. Please check your information and try again.');
+        setShowAlert(true);
+        //alert(error.message || 'Registration failed. Please check your information and try again.');
       }
     },
   });
+
   return (
+    <React.Fragment>
+    {showAlert && (
+      <Alert severity="error" variant='filled' sx={{ p:2 }}>
+        Registration failed. Please check your information and try again.
+      </Alert>
+      
+    )}
     <Box
     component="form"
     onSubmit={formik.handleSubmit}
@@ -73,7 +94,7 @@ const RegistrationPage = () => {
       gap: 4,
       width: '350px',
       margin: 'auto',
-      marginTop: '200px',
+      marginTop: '100px',
       bgcolor: "secondary.main",
       borderRadius: 4,
       padding: 4,
@@ -83,6 +104,43 @@ const RegistrationPage = () => {
     autoComplete="off"
   >
     <Typography variant="h4">Create an account</Typography>
+
+    <TextField
+      fullWidth
+      id="first"
+      name="first"
+      label="First name"
+      type="text"
+      value={formik.values.first}
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+      error={formik.touched.first && Boolean(formik.errors.first)}
+      helperText={formik.touched.first && formik.errors.first}
+    />
+
+    <TextField
+      fullWidth
+      id="last"
+      name="last"
+      label="Last name"
+      type="text"
+      value={formik.values.last}
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+      error={formik.touched.last && Boolean(formik.errors.last)}
+      helperText={formik.touched.last && formik.errors.last}
+    />
+
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        id="date"
+        name="date"
+        label="Date of birth"
+        value={formik.values.date ? dayjs(formik.values.date) : null}
+        onChange={(value) => formik.setFieldValue('date', value)}
+      />
+    </LocalizationProvider>
+
     <TextField
       fullWidth
       id="email"
@@ -101,18 +159,32 @@ const RegistrationPage = () => {
       id="password"
       name="password"
       label="Password"
-      type="password"
+      type={showPassword ? 'text' : 'password'}
       value={formik.values.password}
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
       error={formik.touched.password && Boolean(formik.errors.password)}
       helperText={formik.touched.password && formik.errors.password}
-    />
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={() => setShowPassword(!showPassword)}
+              onMouseDown={(event) => event.preventDefault()}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+  />
 
     <Button color="primary" variant="contained" type="submit" sx ={{ borderRadius: 4 }}>
-      Done
+      Done <CheckIcon />
     </Button>
   </Box>
+  </React.Fragment>
   )
 }
 
