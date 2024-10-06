@@ -19,14 +19,14 @@ const MyProfilePage = () => {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-      // Example token from localStorage, replace with actual logic
-      // const token = localStorage.getItem('authToken');
+      
+      const token = localStorage.getItem('jwt');
   
       // GET user data
       fetch('/api/user', {
         method: 'GET',
         headers: {
-          //'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         }
       })

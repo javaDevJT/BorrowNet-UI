@@ -33,10 +33,13 @@ const EditProfilePage = () => {
     setDescription(event.target.value); // Update description state as user types
   };
 
+  const token = localStorage.getItem('jwt');
+
   useEffect(() => {
-    fetch(`/api/preferences/1`, {
+    fetch(`/api/preferences`, {
       method: 'GET',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     })
@@ -69,8 +72,8 @@ const EditProfilePage = () => {
     fetch('/api/preferences', {
       method: 'PATCH',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json', 
-        //'Authorization': 'Bearer ',
       },
       body: JSON.stringify(profileData), 
     })
