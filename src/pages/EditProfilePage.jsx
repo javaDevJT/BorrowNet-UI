@@ -3,6 +3,7 @@ import { Avatar, Box, Button, CircularProgress, Paper, TextField, Typography } f
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import { styled } from '@mui/material/styles';
 import { deepOrange } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
 
 const Input = styled('input')({
   display: 'none',
@@ -13,6 +14,9 @@ const EditProfilePage = () => {
   const [userPreferencesData, setUserPreferencesData] = useState(null); // State for fetched data
   const [description, setDescription] = useState(''); // State for form description
   const [profileImage, setProfileImage] = useState(''); // State for profile image URL
+
+  const navigate = useNavigate();
+
   
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -64,7 +68,7 @@ const EditProfilePage = () => {
   
     // POST request to save updated profile data as JSON
     fetch('/api/preferences/1', {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json', 
         'Authorization': 'Bearer your-token-here', // Replace with tokeen
@@ -79,7 +83,7 @@ const EditProfilePage = () => {
       })
       .then((data) => {
         console.log('Profile updated successfully:', data);
-        // redirect
+        navigate('/my-profile');
       })
       .catch((error) => {
         console.error('There was a problem with the update:', error);
