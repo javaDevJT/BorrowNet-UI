@@ -7,12 +7,10 @@ import {
 import React from 'react'
 import RegistrationPage from './pages/RegistrationPage';
 import LoginPage from './pages/LoginPage';
-import NewProfilePage from './pages/NewProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import ProfilePage from './pages/ProfilePage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
-import TestingCSSPage from './pages/TestingCSSPage'
 import MainLayout from './layouts/MainLayout';
 import MyProfilePage from './pages/MyProfilePage';
 
@@ -23,11 +21,9 @@ const App = () => {
     createRoutesFromElements(
       <>
         <Route path='/' element={<MainLayout />}>
-          <Route path='/new-profile' element={<NewProfilePage />} />
           <Route path='/profile/:id' element={<ProfilePage />} />
-          <Route path='/edit-profile/:id' element={<EditProfilePage />} />
+          <Route path='/edit-profile' element={<EditProfilePage />} />
           <Route path='/my-profile' element={<MyProfilePage />} />
-          <Route path='/test' element={<TestingCSSPage />} />
           <Route path='/home' element={<HomePage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
