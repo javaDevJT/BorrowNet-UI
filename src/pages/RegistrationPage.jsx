@@ -13,11 +13,11 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 // Validation schema for the registration using Yup
 const registrationSchema = object({
-  first: string()
+  firstName: string()
         .min(1, 'First name must be at least 1 character long')
         .matches(/^[a-zA-Z]+$/, 'First name must contain only letters')
         .required('Required'),
-  last: string()
+  lastName: string()
         .min(1, 'Last name must be at least 1 character long')
         .matches(/^[a-zA-Z]+$/, 'Last name must contain only letters')
         .required('Required'),
@@ -40,8 +40,8 @@ const RegistrationPage = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      first: '',
-      last: '',
+      firstName: '',
+      lastName: '',
       date: '',
       email: '',
       password: '',
@@ -109,11 +109,11 @@ const RegistrationPage = () => {
       name="first"
       label="First name"
       type="text"
-      value={formik.values.first}
+      value={formik.values.firstName}
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
-      error={formik.touched.first && Boolean(formik.errors.first)}
-      helperText={formik.touched.first && formik.errors.first}
+      error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+      helperText={formik.touched.firstName && formik.errors.firstName}
     />
 
     <TextField
@@ -122,11 +122,11 @@ const RegistrationPage = () => {
       name="last"
       label="Last name"
       type="text"
-      value={formik.values.last}
+      value={formik.values.lastName}
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
-      error={formik.touched.last && Boolean(formik.errors.last)}
-      helperText={formik.touched.last && formik.errors.last}
+      error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+      helperText={formik.touched.lastName && formik.errors.lastName}
     />
 
     <LocalizationProvider dateAdapter={AdapterDayjs}>
