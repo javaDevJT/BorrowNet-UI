@@ -14,13 +14,13 @@ const ProfilePage = () => {
 
     useEffect(() => {
       // Example token from localStorage, replace with actual logic
-      // const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('jwt');
   
       // GET user data
       fetch(`/api/user/public/${id}`, {
         method: 'GET',
         headers: {
-          //'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         }
       })

@@ -67,8 +67,10 @@ const EditProfilePage = () => {
       profileDescription: description,
       profilePicture: selectedImage || profileImage, // Send base64 string or existing image
     };
-  
-    // POST request to save updated profile data as JSON
+
+    const token = localStorage.getItem('jwt');
+
+    // PATCH request to save updated profile data as JSON
     fetch('/api/preferences', {
       method: 'PATCH',
       headers: {
