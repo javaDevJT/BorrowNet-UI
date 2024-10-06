@@ -12,17 +12,17 @@ const loginSchema = object({
 
 // Login page component
 const LoginPage = () => {
-  const [showAlert, setShowAlert] = useState(false);
-  const navigate = useNavigate();
-  const formik = useFormik({
+  const [showAlert, setShowAlert] = useState(false); // To show alert message if login fails
+  const navigate = useNavigate(); // To navigate to another page
+  const formik = useFormik({ // Formik hook to handle form state
     initialValues: {
       email: '',
       password: '',
     },
-    validationSchema: loginSchema,
-    onSubmit: async (values) => {
+    validationSchema: loginSchema, // Validation schema for the form
+    onSubmit: async (values) => { // Submit handler
       try {
-        const response = await fetch('/auth/signin', {
+        const response = await fetch('/auth/signin', { // Send login request
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -33,10 +33,10 @@ const LoginPage = () => {
         if (!response.ok) {
           throw new Error('Login failed');
         } else {
-          const data = await response.json();
+          const data = await response.json(); // Parse response data as JSON
           if (data.token) {
-            localStorage.setItem('token', data.token);
-            navigate('/home'); // Navigate to homepage if login is successful
+            localStorage.setItem('token', data.token); // If token is received, store it in local storage
+            navigate('/home'); // Finally navigate to homepage
           } else {
             throw new Error('No token received');
           }
@@ -60,7 +60,7 @@ const LoginPage = () => {
       )}
       <Box
       component="form"
-      onSubmit={formik.handleSubmit}
+      onSubmit={formik.handleSubmit} // Form submit handler
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -73,8 +73,8 @@ const LoginPage = () => {
         padding: 4,
         minWidth: '350px',
       }}
-      noValidate
-      autoComplete="off"
+      noValidate // Disable browser validation
+      autoComplete="off" // Disable autocomplete
     >
       <Typography variant="h4">Login</Typography>
       <TextField

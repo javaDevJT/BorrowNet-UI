@@ -8,7 +8,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -36,8 +35,8 @@ const registrationSchema = object({
 
 // Registration page component
 const RegistrationPage = () => {
-  const [showAlert, setShowAlert] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showAlert, setShowAlert] = useState(false); // To show alert message if registration fails
+  const [showPassword, setShowPassword] = useState(false); // To show or hide password
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -104,7 +103,6 @@ const RegistrationPage = () => {
     autoComplete="off"
   >
     <Typography variant="h4">Create an account</Typography>
-
     <TextField
       fullWidth
       id="first"
