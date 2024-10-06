@@ -60,18 +60,17 @@ const EditProfilePage = () => {
   const handleSubmit = () => {
     // Prepare the data to be sent in the POST request
     const profileData = {
-      id: 1,
       borrowDistanceKM: 10.00,
       profileDescription: description,
       profilePicture: selectedImage || profileImage, // Send base64 string or existing image
     };
   
     // POST request to save updated profile data as JSON
-    fetch('/api/preferences/1', {
+    fetch('/api/preferences', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json', 
-        'Authorization': 'Bearer your-token-here', // Replace with tokeen
+        //'Authorization': 'Bearer ',
       },
       body: JSON.stringify(profileData), 
     })

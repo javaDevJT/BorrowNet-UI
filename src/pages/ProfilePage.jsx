@@ -17,7 +17,7 @@ const ProfilePage = () => {
       // const token = localStorage.getItem('authToken');
   
       // GET user data
-      fetch(`/api/users/${id}`, {
+      fetch(`/api/user/public/${id}`, {
         method: 'GET',
         headers: {
           //'Authorization': `Bearer ${token}`,
