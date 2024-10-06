@@ -105,8 +105,8 @@ const RegistrationPage = () => {
     <Typography variant="h4">Create an account</Typography>
     <TextField
       fullWidth
-      id="first"
-      name="first"
+      id="firstName"
+      name="firstName"
       label="First name"
       type="text"
       value={formik.values.firstName}
@@ -118,8 +118,8 @@ const RegistrationPage = () => {
 
     <TextField
       fullWidth
-      id="last"
-      name="last"
+      id="lastName"
+      name="lastName"
       label="Last name"
       type="text"
       value={formik.values.lastName}
