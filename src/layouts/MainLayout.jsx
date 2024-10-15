@@ -20,7 +20,7 @@ const MainLayout = () => {
   };
   
   const redirectToHome = () => {
-    navigate('/');
+    navigate('/home');
   };
 
   const redirectToLogin = () => {
