@@ -6,18 +6,12 @@ import HomeIcon from '@mui/icons-material/Home';
 
 
 
-import React from 'react'
+import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom'
 
 
 
 const MainLayout = () => {
-
-  const [open, setOpen] = React.useState(false);
-
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
 
   const navigate = useNavigate();
 
@@ -29,10 +23,30 @@ const MainLayout = () => {
     navigate('/');
   };
 
-  const logOut = () => {
-    //remove session cookie
+  const redirectToLogin = () => {
     navigate('/login');
   };
+
+  const logOut = () => {
+    localStorage.removeItem('jwt');
+    redirectToLogin();
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      redirectToLogin();
+    }
+  }, []); 
+
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+
+
+
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { Button, TextField, Box, Typography, Stack, Alert } from '@mui/material';
@@ -14,6 +14,15 @@ const loginSchema = object({
 const LoginPage = () => {
   const [showAlert, setShowAlert] = useState(false); // To show alert message if login fails
   const navigate = useNavigate(); // To navigate to another page
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token != null) {
+      navigate('/home');
+    }
+  }, []); 
+
+
   const formik = useFormik({ // Formik hook to handle form state
     initialValues: {
       email: '',
@@ -31,7 +40,11 @@ const LoginPage = () => {
         });
 
         if (!response.ok) {
-          throw new Error('Login failed');
+          // Handle 401 or other errors
+          if (response.status === 401) {
+            throw new Error('Invalid credentials. Please try again.');
+          }
+          throw new Error('An error occurred while trying to log in.');
         } else {
           const data = await response.json(); // Parse response data as JSON
           if (data.jwt) {
