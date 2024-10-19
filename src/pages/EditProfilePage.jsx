@@ -4,6 +4,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import { styled } from '@mui/material/styles';
 import { deepOrange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 const Input = styled('input')({
   display: 'none',
@@ -16,7 +17,7 @@ const EditProfilePage = () => {
   const [profileImage, setProfileImage] = useState(''); // State for profile image URL
 
   const navigate = useNavigate();
-
+  const authHeader = useAuthHeader();
   
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -33,13 +34,12 @@ const EditProfilePage = () => {
     setDescription(event.target.value); // Update description state as user types
   };
 
-  const token = localStorage.getItem('jwt');
 
   useEffect(() => {
     fetch(`/api/preferences`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': authHeader,
         'Content-Type': 'application/json',
       },
     })
@@ -52,7 +52,7 @@ const EditProfilePage = () => {
       .then((data) => {
         setUserPreferencesData(data);
         setDescription(data.profileDescription); // Set description field with fetched data
-        setProfileImage(data.profilePicture); // Set initial profile image from fetched data
+        setProfileImage('data:image/JPG;base64,' + data.profilePicture); // Set initial profile image from fetched data
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
@@ -68,13 +68,12 @@ const EditProfilePage = () => {
       profilePicture: selectedImage || profileImage, // Send base64 string or existing image
     };
 
-    const token = localStorage.getItem('jwt');
 
     // PATCH request to save updated profile data as JSON
     fetch('/api/preferences', {
       method: 'PATCH',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': authHeader,
         'Content-Type': 'application/json', 
       },
       body: JSON.stringify(profileData), 

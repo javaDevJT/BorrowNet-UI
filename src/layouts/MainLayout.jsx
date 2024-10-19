@@ -8,11 +8,13 @@ import HomeIcon from '@mui/icons-material/Home';
 
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom'
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 
 
 const MainLayout = () => {
 
+  const signOut = useSignOut();
   const navigate = useNavigate();
 
   const redirectToMyProfilePage = () => {
@@ -28,7 +30,7 @@ const MainLayout = () => {
   };
 
   const logOut = () => {
-    localStorage.removeItem('jwt');
+    signOut();
     redirectToLogin();
   };
 

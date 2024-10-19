@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { Button, TextField, Box, Typography, Stack, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import useSignIn from "react-auth-kit/hooks/useSignIn";
+import {jwtDecode} from "jwt-decode";
 
 // Validation schema for the login using Yup
 const loginSchema = object({
@@ -14,13 +16,7 @@ const loginSchema = object({
 const LoginPage = () => {
   const [showAlert, setShowAlert] = useState(false); // To show alert message if login fails
   const navigate = useNavigate(); // To navigate to another page
-
-  useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token != null) {
-      navigate('/home');
-    }
-  }, []); 
+  const signIn = useSignIn();
 
 
   const formik = useFormik({ // Formik hook to handle form state
@@ -48,13 +44,23 @@ const LoginPage = () => {
         } else {
           const data = await response.json(); // Parse response data as JSON
           if (data.jwt) {
-            localStorage.setItem('jwt', data.jwt); // If token is received, store it in local storage
-            navigate('/home'); // Finally navigate to homepage
+            const jwtDecoded = jwtDecode(data.jwt);
+            signIn({
+              auth: {
+                token: data.jwt,
+                type: 'Bearer'
+              },
+              userState: {
+                firstName: jwtDecoded['firstName'],
+                lastName: jwtDecoded['lastName'],
+                email: jwtDecoded['email']
+              }
+            })
+            navigate('/home');
           } else {
             throw new Error('No token received');
           }
         }
-
       } catch (error) {
         console.error('Login error:', error);
         setShowAlert(true);

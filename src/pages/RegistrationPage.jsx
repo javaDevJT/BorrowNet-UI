@@ -10,6 +10,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import useSignIn from "react-auth-kit/hooks/useSignIn";
+import {jwtDecode} from "jwt-decode";
 
 // Validation schema for the registration using Yup
 const registrationSchema = object({
@@ -38,6 +40,7 @@ const RegistrationPage = () => {
   const [showAlert, setShowAlert] = useState(false); // To show alert message if registration fails
   const [showPassword, setShowPassword] = useState(false); // To show or hide password
   const navigate = useNavigate();
+  const signIn = useSignIn();
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -60,10 +63,21 @@ const RegistrationPage = () => {
         if (!response.ok) {
           throw new Error('Registration failed');
         } else {
-          const data = await response.json();
+          const data = await response.json();// Parse response data as JSON
           if (data.jwt) {
-            const token = localStorage.setItem('jwt', data.jwt);
-            navigate ('/home');
+            const jwtDecoded = jwtDecode(data.jwt);
+            signIn({
+              auth: {
+                token: data.jwt,
+                type: 'Bearer'
+              },
+              userState: {
+                firstName: jwtDecoded['firstName'],
+                lastName: jwtDecoded['lastName'],
+                email: jwtDecoded['email']
+              }
+            })
+            navigate('/home');
           } else {
             throw new Error('No token received');
           }

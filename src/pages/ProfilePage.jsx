@@ -4,23 +4,23 @@ import ProfileComponent from '../components/ProfileComponent';
 import ReviewsComponent from '../components/ReviewsComponent';
 import PostsComponent from '../components/PostsComponent';
 import { Box, CircularProgress } from '@mui/material';
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 const ProfilePage = () => {
   
   const { id } = useParams();
   //const userId = parseInt(id, 10);
 
+  const authHeader = useAuthHeader();
   const [userData, setUserData] = useState(null);
 
     useEffect(() => {
       // Example token from localStorage, replace with actual logic
-      const token = localStorage.getItem('jwt');
-  
       // GET user data
       fetch(`/api/user/public/${id}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': authHeader,
           'Content-Type': 'application/json',
         }
       })
@@ -47,7 +47,7 @@ const ProfilePage = () => {
 
   return (
     <Box>
-        <ProfileComponent firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={userData.userPreferences.profilePicture}/> 
+        <ProfileComponent firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={'data:image/JPG;base64,' + userData.userPreferences.profilePicture}/>
         <ReviewsComponent/>
         <PostsComponent/>    
     </Box>
