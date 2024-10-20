@@ -34,12 +34,7 @@ const MainLayout = () => {
     redirectToLogin();
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (!token) {
-      redirectToLogin();
-    }
-  }, []); 
+
 
   const [open, setOpen] = React.useState(false);
 
