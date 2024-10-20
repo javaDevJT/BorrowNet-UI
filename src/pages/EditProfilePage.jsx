@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import { deepOrange } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 const Input = styled('input')({
   display: 'none',
@@ -18,6 +19,7 @@ const EditProfilePage = () => {
 
   const navigate = useNavigate();
   const authHeader = useAuthHeader();
+  const authUser = useAuthUser()
   
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -131,13 +133,13 @@ const EditProfilePage = () => {
           </label>
           {selectedImage ? (
             <Avatar
-              alt="Uploaded Profile"
+              alt={authUser.firstName}
               src={selectedImage} // Preview newly uploaded image
               sx={{ width: 200, height: 200, m: 4 }}
             />
           ) : profileImage ? (
             <Avatar
-              alt="Profile"
+              alt={authUser.firstName}
               src={profileImage} // Display fetched profile image
               sx={{ width: 200, height: 200, m: 4 }}
             />
@@ -145,7 +147,7 @@ const EditProfilePage = () => {
             <Avatar
               sx={{ width: 200, height: 200, m: 4, bgcolor: deepOrange[500] }}
             >
-              <Typography variant="h1">R</Typography>
+              <Typography variant="h1">{authUser.firstName.slice(0,2)}</Typography>
             </Avatar>
           )}
         </Box>

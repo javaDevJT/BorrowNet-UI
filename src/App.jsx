@@ -16,6 +16,9 @@ import MyProfilePage from './pages/MyProfilePage';
 import createStore from 'react-auth-kit/createStore';
 import AuthProvider from "react-auth-kit";
 import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
+import RateUserPage from './pages/RateUserPage';
+import ReportUserPage from './pages/ReportUserPage';
+import CreatePostingPage from './pages/CreatePostingPage';
 
 
 const App = () => {
@@ -35,8 +38,11 @@ const App = () => {
             <Route element={<AuthOutlet fallbackPath={'/login'}/>}>
                 <Route path='/' element={<MainLayout/>}>
                     <Route path='/profile/:id' element={<ProfilePage/>}/>
+                    <Route path='/profile/:id/rate' element={<RateUserPage/>}/>
+                    <Route path='/profile/:id/report' element={<ReportUserPage/>}/>
                     <Route path='/edit-profile' element={<EditProfilePage/>}/>
                     <Route path='/my-profile' element={<MyProfilePage/>}/>
+                    <Route path='/new-post' element={<CreatePostingPage/>}/>
                     <Route path='/home' element={<HomePage/>}/>
                     <Route path='*' element={<NotFoundPage/>}/>
                 </Route>
