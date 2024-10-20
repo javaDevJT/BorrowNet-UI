@@ -16,8 +16,8 @@ const PostsComponent = ({ user }) => {
               Posts
       </Typography>
           <Grid2 container spacing={3}>
-              {postList.map((post) => (
-                  <Grid2 item size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+              {postList.map((post, index) => (
+                  <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={index}>
                       <Card
                         sx = {{borderRadius: 4}}
                       >

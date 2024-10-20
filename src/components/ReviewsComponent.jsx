@@ -21,8 +21,8 @@ const ReviewsComponent = ({ user }) => {
               Reviews
       </Typography>
           <Grid2 container spacing={3}>
-              {reviewsList.map((review) => (
-                  <Grid2 item size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+              {reviewsList.map((review, index) => (
+                  <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={index}>
                       <Card
                         sx = {{borderRadius: 4}}
                       >
@@ -33,7 +33,7 @@ const ReviewsComponent = ({ user }) => {
                               </Avatar>
                               }
                               //subheader={review}
-                              title={<Rating name="read-only" value='3' readOnly />}
+                              title={<Rating name="read-only" value={3} readOnly />}
                               subheader='30 September 2024'
                               
                           />
