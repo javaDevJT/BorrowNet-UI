@@ -7,12 +7,12 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 const newPostingSchema = object({
-  title: string()
+  itemName: string()
     .min(1, 'The title must be at least 1 character long')
     .max(30, 'The title must be at most 30 characters long')
     .matches(/^[a-zA-Z]+$/, 'The title must contain only letters')
     .required('Required'),
-  description: string()
+  itemDescription: string()
     .max(500, 'Description must be at most 500 characters')
     .matches(/^[a-zA-Z0-9]+$/, 'The description must contain only letters and numbers'),
   timeLimit: number()
@@ -40,8 +40,9 @@ const CreatePostingPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: '',
-      description: '',
+      itemName: '',
+      itemDescription: '',
+      itemPhoto: '',
       timeLimit: '',
       condition: '',
     },
@@ -49,12 +50,12 @@ const CreatePostingPage = () => {
     onSubmit: async (values) => {
       try {
         const formData = new FormData();
-        formData.append('title', values.title);
-        formData.append('description', values.description || '');
+        formData.append('itemName', values.itemName);
+        formData.append('itemDescription', values.itemDescription || '');
         formData.append('timeLimit', values.timeLimit);
         formData.append('condition', values.condition);
         if (selectedImage) {
-          formData.append('image', selectedImage); // Add the item image to form data
+          formData.append('itemPhoto', selectedImage); // Add the item image to form data
         }
 
         const response = await fetch('/api/auth/new-post', {
@@ -62,7 +63,7 @@ const CreatePostingPage = () => {
           headers: {
             'Authorization': authHeader,
           },
-          body: formData, // Send as FormData
+          body: formData,
         });
 
         if (!response.ok) {
@@ -102,31 +103,31 @@ const CreatePostingPage = () => {
 
         <TextField
           fullWidth
-          id="title"
-          name="title"
+          id="itemName"
+          name="itemName"
           label="Title"
           type="text"
-          value={formik.values.title}
+          value={formik.values.itemName}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.title && Boolean(formik.errors.title)}
-          helperText={formik.touched.title && formik.errors.title}
+          error={formik.touched.itemName && Boolean(formik.errors.itemName)}
+          helperText={formik.touched.itemName && formik.errors.itemName}
         />
 
         <TextField
           sx={{ marginTop: 2 }}
           fullWidth
-          id="description"
-          name="description"
+          id="itemDescription"
+          name="itemDescription"
           label="Description (Optional)"
           type="text"
           multiline
           rows={4}
-          value={formik.values.description}
+          value={formik.values.itemDescription}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.description && Boolean(formik.errors.description)}
-          helperText={formik.touched.description && formik.errors.description}
+          error={formik.touched.itemDescription && Boolean(formik.errors.itemDescription)}
+          helperText={formik.touched.itemDescription && formik.errors.itemDescription}
         />
 
         <TextField
