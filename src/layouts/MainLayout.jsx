@@ -3,7 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
-
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 
 import React, { useEffect } from 'react';
@@ -27,6 +27,10 @@ const MainLayout = () => {
 
   const redirectToLogin = () => {
     navigate('/login');
+  };
+
+  const redirectToCreatePostingPage = () => {
+    navigate('/new-post');
   };
 
   const logOut = () => {
@@ -62,6 +66,14 @@ const MainLayout = () => {
               <AccountCircleIcon />
             </ListItemIcon>
             <ListItemText primary='My Profile' />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key='3' disablePadding>
+          <ListItemButton onClick={redirectToCreatePostingPage}>
+            <ListItemIcon>
+              <AddToPhotosIcon />
+            </ListItemIcon>
+            <ListItemText primary='New Posting' />
           </ListItemButton>
         </ListItem>
         <Divider />
