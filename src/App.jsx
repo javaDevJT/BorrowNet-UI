@@ -38,8 +38,8 @@ const App = () => {
             <Route element={<AuthOutlet fallbackPath={'/login'}/>}>
                 <Route path='/' element={<MainLayout/>}>
                     <Route path='/profile/:id' element={<ProfilePage/>}/>
-                    <Route path='/profile/:id/rate' element={<RateUserPage/>}/>
-                    <Route path='/profile/:id/report' element={<ReportUserPage/>}/>
+                    <Route path='/profile/:profileId/rate' element={<RateUserPage/>}/>
+                    <Route path='/profile/:profileId/report' element={<ReportUserPage/>}/>
                     <Route path='/edit-profile' element={<EditProfilePage/>}/>
                     <Route path='/my-profile' element={<MyProfilePage/>}/>
                     <Route path='/new-post' element={<CreatePostingPage/>}/>
