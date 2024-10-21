@@ -63,7 +63,7 @@ const EditProfilePage = () => {
 
 
   const handleSubmit = () => {
-    // Prepare the data to be sent in the POST request
+    // Prepare the data to be sent in the request
     const profileData = {
       borrowDistanceKM: 10.00,
       profileDescription: description,

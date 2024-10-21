@@ -6,12 +6,60 @@ import { deepOrange } from '@mui/material/colors';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { number, object, string } from 'yup';
+
 
 const RateUserPage = () => {
 
+  const authHeader = useAuthHeader();
+  const authUser = useAuthUser()
   const { profileId } = useParams();
-  console.log(profileId)
+  const navigate = useNavigate();
 
+
+
+  const [description, setDescription] = useState(''); // State for form description
+  const [rate, setRate] = useState(5); // State for form rate
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleRateChange = (event, newValue) => {
+    setRate(newValue);
+  }
+
+  const handleSubmit = () => {
+    // Prepare the data to be sent in the request
+    const reviewData = {
+      rating: rate,
+      details: description,
+    };
+
+    console.log(reviewData);
+
+    fetch(`/api/user/${profileId}/rate`, {
+      method: 'POST',
+      headers: {
+        'Authorization': authHeader,
+        'Content-Type': 'application/json', 
+      },
+      body: JSON.stringify(reviewData), 
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to rate profile');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Profile rated successfully:', data);
+        navigate('/home');
+      })
+      .catch((error) => {
+        console.error('There was a problem with edit:', error);
+      });
+  }
 
   return (
     <React.Fragment>
@@ -29,7 +77,11 @@ const RateUserPage = () => {
       >
         <Box sx={{ mx: 6, marginTop: 3}}>
           <Typography sx={{marginBottom: 1}}>Overall Rating</Typography>
-          <Rating size='large'/>
+          <Rating
+            size='large'
+            value={rate}
+            onChange={handleRateChange}
+      />
         </Box>
 
         <TextField
@@ -38,9 +90,8 @@ const RateUserPage = () => {
             multiline
             rows={8}
             variant="outlined"
-            //fullWidth
-            //value={description} // Set the value of the text field
-            //onChange={handleDescriptionChange} // Update the description state on change
+            value={description} // Set the value of the text field
+            onChange={handleDescriptionChange} // Update the description state on change
             
           />
 
@@ -51,7 +102,7 @@ const RateUserPage = () => {
         color="primary"
         variant="contained"
         type="submit"
-        //onClick={handleSubmit} // Trigger form submission
+        onClick={handleSubmit} // Trigger form submission
         sx={{ borderRadius: 4, mx: 5, my: 1 }}
       >
         Submit
