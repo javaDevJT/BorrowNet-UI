@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProfileComponent from '../components/ProfileComponent';
 import ReviewsComponent from '../components/ReviewsComponent';
 import PostsComponent from '../components/PostsComponent';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import ReportIcon from '@mui/icons-material/Report';
+import RateReviewIcon from '@mui/icons-material/RateReview';
 
 const ProfilePage = () => {
   
   const { id } = useParams();
-  //const userId = parseInt(id, 10);
 
   const authHeader = useAuthHeader();
   const [userData, setUserData] = useState(null);
+
+  const navigate = useNavigate();
 
     useEffect(() => {
       // Example token from localStorage, replace with actual logic
@@ -45,12 +48,33 @@ const ProfilePage = () => {
     }
 
 
+    const redirectToRatePage = () => {
+      navigate(`/profile/${id}/rate`);
+    };
+
+    const redirectToReportPage = () => {
+      navigate(`/profile/${id}/report`);
+    };
+
+
   return (
-    <Box>
-        <ProfileComponent firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={'data:image/JPG;base64,' + userData.userPreferences.profilePicture}/>
-        <ReviewsComponent/>
-        <PostsComponent/>    
-    </Box>
+    <React.Fragment>
+      <Stack direction="row" spacing={2}>
+        <Button variant="contained" startIcon={<RateReviewIcon />} onClick={redirectToRatePage}>
+          Rate
+        </Button>
+        <Button variant="contained" startIcon={<ReportIcon />} onClick={redirectToReportPage}>
+          Report
+        </Button>
+      </Stack>
+      <Box>
+          <ProfileComponent firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={'data:image/JPG;base64,' + userData.userPreferences.profilePicture}/>
+          <ReviewsComponent/>
+          <PostsComponent/>    
+      </Box>
+
+    </React.Fragment>
+
   );
 }
 
