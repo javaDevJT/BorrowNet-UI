@@ -2,35 +2,41 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik';
 import { number, object, string } from 'yup'
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField, Typography, Box, Alert  } from '@mui/material'
+import { Avatar, Button, TextField, Typography, Box, Alert, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material'
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 const newPostingSchema = object({
   title: string()
-        .min(1, 'The title must be at least 1 character long')
-        .max(30, 'The title must be at most 30 characters long')
-        .matches(/^[a-zA-Z]+$/, 'The title must contain only letters')
-        .required('Required'),
+    .min(1, 'The title must be at least 1 character long')
+    .max(30, 'The title must be at most 30 characters long')
+    .matches(/^[a-zA-Z]+$/, 'The title must contain only letters')
+    .required('Required'),
   description: string()
-              .max(500, 'Description must be at most 500 characters')
-              .matches(/^[a-zA-Z0-9]+$/, 'The description must contain only letters and numbers'),
+    .max(500, 'Description must be at most 500 characters')
+    .matches(/^[a-zA-Z0-9]+$/, 'The description must contain only letters and numbers'),
   timeLimit: number()
-            .positive()
-            .integer()
-            .max(30) // 30 days maximum
-            .required('Required'),
+    .positive()
+    .integer()
+    .max(30, 'Time Limit is 30 days')
+    .required('Required'),
   condition: string()
-            .max(30, 'Must be at most 30 characters long')
-            .required('Required'),
+    .max(30, 'Must be at most 30 characters long')
+    .required('Required')
 });
 
-
 const CreatePostingPage = () => {
-  const [showAlert, setShowAlert] = useState(false); // To show alert message if something goes wrong
-  
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
-
   const authHeader = useAuthHeader();
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setSelectedImage(file);
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -42,23 +48,30 @@ const CreatePostingPage = () => {
     validationSchema: newPostingSchema,
     onSubmit: async (values) => {
       try {
+        const formData = new FormData();
+        formData.append('title', values.title);
+        formData.append('description', values.description || '');
+        formData.append('timeLimit', values.timeLimit);
+        formData.append('condition', values.condition);
+        if (selectedImage) {
+          formData.append('image', selectedImage); // Add the item image to form data
+        }
+
         const response = await fetch('/api/auth/new-post', {
           method: 'POST',
           headers: {
             'Authorization': authHeader,
-            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(values),
+          body: formData, // Send as FormData
         });
 
         if (!response.ok) {
           throw new Error('Creation failed');
         } else {
-            navigate('/home');
-          }
-        
+          navigate('/home'); // Redirect to home page where the new posting will be displayed
+        }
       } catch (error) {
-        console.error('Creation error:', error);
+        console.error(error);
         setShowAlert(true);
       }
     },
@@ -67,12 +80,12 @@ const CreatePostingPage = () => {
   return (
     <React.Fragment>
       {showAlert && (
-        <Alert severity="error" variant='filled' sx={{ p:2 }}>
+        <Alert severity="error" variant='filled' sx={{ p: 2 }}>
           Creation failed. Please check your information and try again.
         </Alert>
       )}
       <Box
-        item xs={12}
+        xs={12}
         component="form"
         onSubmit={formik.handleSubmit}
         noValidate
@@ -101,9 +114,7 @@ const CreatePostingPage = () => {
         />
 
         <TextField
-          sx={{
-            marginTop: 2,
-          }}
+          sx={{ marginTop: 2 }}
           fullWidth
           id="description"
           name="description"
@@ -119,9 +130,7 @@ const CreatePostingPage = () => {
         />
 
         <TextField
-          sx={{
-            marginTop: 2,
-          }}
+          sx={{ marginTop: 2 }}
           fullWidth
           id="timeLimit"
           name="timeLimit"
@@ -135,40 +144,54 @@ const CreatePostingPage = () => {
           helperText={formik.touched.timeLimit && formik.errors.timeLimit}
         />
 
-        <TextField
-          sx={{
-            marginTop: 2,
-          }}
-          fullWidth
-          id="condition"
-          name="condition"
-          label="Condition"
-          type="text"
-          value={formik.values.condition}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.condition && Boolean(formik.errors.condition)}
-          helperText={formik.touched.condition && formik.errors.condition}
-        />
+        <FormControl fullWidth sx={{ marginTop: 2 }} error={formik.touched.condition && Boolean(formik.errors.condition)}>
+          <InputLabel id="condition-label">Condition</InputLabel>
+          <Select
+            labelId="condition-label"
+            id="condition"
+            name="condition"
+            value={formik.values.condition}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            label="Condition"
+          >
+            <MenuItem value="New">New</MenuItem>
+            <MenuItem value="GoodCondition">Good Condition</MenuItem>
+            <MenuItem value="BadCondition">Bad Condition</MenuItem>
+          </Select>
+          {formik.touched.condition && formik.errors.condition && (
+            <FormHelperText>{formik.errors.condition}</FormHelperText>
+          )}
+        </FormControl>
 
-        <TextField
-          sx={{
-            marginTop: 2,
-            marginBottom: 2,
-          }}
-          fullWidth
-          id="image"
-          name="image"
-          label="Choose an image of the item"
-          type="file"
-          inputProps={{ accept: 'image/*' }}
-          onChange={(event) => {
-            formik.setFieldValue("picture", event.currentTarget.files[0]);
-          }}
-          onBlur={formik.handleBlur}
-          error={formik.touched.picture && Boolean(formik.errors.picture)}
-          helperText={formik.touched.picture && formik.errors.picture}
-        />
+        <Box sx={{ marginTop: 2, marginBottom: 2 }}>
+          <input
+            accept="image/*"
+            id="image-upload"
+            type="file"
+            style={{ display: 'none' }}
+            onChange={handleImageChange}
+          />
+          <label htmlFor="image-upload">
+            <Button
+              variant="outlined"
+              component="span"
+              startIcon={<InsertPhotoIcon />}
+              sx={{ width: '100%' }}
+            >
+              Upload Image
+            </Button>
+          </label>
+
+          {selectedImage && (
+            <Avatar
+              variant="square"
+              alt="Preview"
+              src={URL.createObjectURL(selectedImage)} // Preview uploaded image
+              sx={{ width: 200, height: 200, m: 4 }}
+            />
+          )}
+        </Box>
 
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
           <Button type="submit" variant="contained" color="primary" sx={{ borderRadius: 4 }}>
@@ -180,4 +203,4 @@ const CreatePostingPage = () => {
   );
 };
 
-export default CreatePostingPage
+export default CreatePostingPage;
