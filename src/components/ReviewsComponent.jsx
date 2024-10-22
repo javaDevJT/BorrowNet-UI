@@ -4,10 +4,6 @@ import { red } from '@mui/material/colors';
 
 const ReviewsComponent = ({ user }) => {
 
-    const printDeb = () => {
-        // Prepare the data to be sent in the request
-        console.log("fshdbc");
-        };
 
     const reviewsList = ["John", "Emily", "Mike", "Henry", "Gerald", "Marta", "Mattia"];
     const reviewContent = `Niente è paragonabile. Esiste forse cosa
@@ -58,7 +54,7 @@ const ReviewsComponent = ({ user }) => {
                                 }
                                 //subheader={review}
                                 title={<Rating name="read-only" value={3} readOnly />}
-                                subheader='30 September 2024'
+                                subheader='Riccardo Morelli'
                                 
                             />
                             <CardContent>
@@ -86,7 +82,7 @@ const ReviewsComponent = ({ user }) => {
                                     </Avatar>
                                 }
                                 title={<Rating name="read-only" value={3} readOnly />}
-                                subheader='30 September 2024'
+                                subheader='Riccardo Morelli'
                             />
                             <CardContent>
                                 <Typography>{reviewContent}</Typography>
