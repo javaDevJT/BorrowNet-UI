@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardContent, CardHeader, Paper, Typography } from '@mui/material'
+import { Avatar, Box, Paper, Typography } from '@mui/material'
 import { red } from '@mui/material/colors'
 import React from 'react'
 

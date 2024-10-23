@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import useSignIn from "react-auth-kit/hooks/useSignIn";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 // Validation schema for the registration using Yup
 const registrationSchema = object({

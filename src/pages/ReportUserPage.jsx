@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Paper, Rating, Select, TextField, Typography } from '@mui/material';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import { styled } from '@mui/material/styles';
-import { deepOrange } from '@mui/material/colors';
-import { useNavigate, useParams } from 'react-router-dom';
-import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import React from 'react';
+import { Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 const ReportUserPage = () => {
 

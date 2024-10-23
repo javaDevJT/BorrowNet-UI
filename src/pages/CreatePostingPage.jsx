@@ -13,8 +13,7 @@ const newPostingSchema = object({
     .matches(/^[a-zA-Z]+$/, 'The title must contain only letters')
     .required('Required'),
   itemDescription: string()
-    .max(500, 'Description must be at most 500 characters')
-    .matches(/^[a-zA-Z0-9]+$/, 'The description must contain only letters and numbers'),
+    .max(500, 'Description must be at most 500 characters'),
   timeLimit: number()
     .positive()
     .integer()

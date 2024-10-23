@@ -61,7 +61,6 @@ const EditProfilePage = () => {
       });
   }, []);
 
-
   const handleSubmit = () => {
     // Prepare the data to be sent in the request
     const profileData = {

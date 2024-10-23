@@ -1,11 +1,9 @@
 import React from 'react'
-import { Avatar, Card, CardContent, CardHeader, CardMedia, Grid2, Typography } from '@mui/material';
-import { red } from '@mui/material/colors';
+import { Card, CardHeader, CardMedia, Grid2, Typography } from '@mui/material';
 
-const PostsComponent = ({ user }) => {
+const PostsComponent = () => {
 
   const postList = ["1", "2", "3"];
-
 
   return (  
     <React.Fragment>

@@ -3,8 +3,7 @@ import { Avatar, Box, Card, CardActionArea, CardContent, CardHeader, Grid2, Moda
 import { red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 
-const ReviewsComponent = ({ user }) => {
-
+const ReviewsComponent = () => {
 
     const navigate = useNavigate();
 

@@ -1,34 +1,40 @@
 import { Avatar, Box, Card, CardContent, Pagination, Stack, Typography, Alert } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 const HomePage = () => {
   const [showAlert, setShowAlert] = useState(false);
-  const [postList, setPostList] = useState([]); // Initialize an empty array to store posts
+  const [postList, setPostList] = useState([]);
+  const [pageNo, setPageNo] = useState(1); // Current page number
+  const [totalPages, setTotalPages] = useState(1); // Will be updated based on total posts
+  const [sortBy, setSortBy] = useState('id'); // Sorting parameter, default to 'id'
 
-  const [pageNo, setPageNo] = useState(1); // To manage current page number
-  const [totalPages, setTotalPages] = useState(1); // To manage total pages
-  const [sortBy, setSortBy] = useState('id'); // Backend defaults to sorting by 'id'
-  const pageSize = 10; // Assuming 10 posts per page
-
-  const fetchPosts = async (pageNo, pageSize, sortBy) => {
-    try {
-      const response = await fetch(`/api/posts/list?pageNo=${pageNo - 1}&pageSize=${pageSize}&sortBy=${sortBy}`);
-      if (!response.ok) {
-        throw new Error('Network response error.');
-      } else {
-        const data = await response.json();
-        setPostList(data); // Assuming the API returns an array of posts directly
-        // setTotalPages(data.totalPages || Math.ceil(totalPosts / pageSize));
-      }
-    } catch (error) {
-      console.error(error);
-      setShowAlert(true);
-    }
-  };
+  const authHeader = useAuthHeader();
 
   useEffect(() => {
-    fetchPosts(pageNo, pageSize, sortBy);
-  }, [pageNo, pageSize, sortBy]);
+    fetch(`/api/posts/list?page=${pageNo - 1}&order=${sortBy}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': authHeader,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response error.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setPostList(data.posts);
+        const totalPosts = data.totalPosts;
+        setTotalPages(Math.ceil(totalPosts / 10));
+      })
+      .catch((error) => {
+        console.error(error);
+        setShowAlert(true);
+      });
+    }, [pageNo, sortBy]);
 
   const handlePageChange = (event, value) => {
     setPageNo(value);
@@ -60,7 +66,7 @@ const HomePage = () => {
           </Card>
         ))}
         <Pagination 
-          count={totalPages} // Adjust if backend returns total pages
+          count={totalPages} // Total number of pages based on posts
           page={pageNo} 
           onChange={handlePageChange} 
           sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }} 

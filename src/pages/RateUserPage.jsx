@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Box, Button, CircularProgress, Paper, Rating, TextField, Typography } from '@mui/material';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import { styled } from '@mui/material/styles';
-import { deepOrange } from '@mui/material/colors';
+import React, { useState } from 'react';
+import { Box, Button, Paper, Rating, TextField, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import { number, object, string } from 'yup';
 
 
 const RateUserPage = () => {
@@ -15,8 +11,6 @@ const RateUserPage = () => {
   const authUser = useAuthUser()
   const { profileId } = useParams();
   const navigate = useNavigate();
-
-
 
   const [description, setDescription] = useState(''); // State for form description
   const [rate, setRate] = useState(5); // State for form rate
