@@ -7,15 +7,19 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 
 import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation} from 'react-router-dom'
 import useSignOut from "react-auth-kit/hooks/useSignOut";
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 
 
 const MainLayout = () => {
 
   const signOut = useSignOut();
+  const isAuthenticated = useIsAuthenticated();
   const navigate = useNavigate();
+  const location = useLocation();
+
 
   const redirectToMyProfilePage = () => {
     navigate('/my-profile');
@@ -37,6 +41,14 @@ const MainLayout = () => {
     signOut();
     redirectToLogin();
   };
+
+  useEffect(() => {
+    if (isAuthenticated && location.pathname === '/') {
+      navigate('/home');  // Redirect to home if authenticated
+    } else if (!isAuthenticated){
+      navigate('/login');  // Redirect to login if not authenticated
+    }
+  }, []);
 
 
 
