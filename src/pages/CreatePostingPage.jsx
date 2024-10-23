@@ -14,7 +14,7 @@ const newPostingSchema = object({
     .required('Required'),
   itemDescription: string()
     .max(500, 'Description must be at most 500 characters'),
-  timeLimit: number()
+  maxRentalDays: number()
     .positive()
     .integer()
     .max(30, 'Time Limit is 30 days')
@@ -42,7 +42,7 @@ const CreatePostingPage = () => {
       itemName: '',
       itemDescription: '',
       itemPhoto: '',
-      timeLimit: '',
+      maxRentalDays: '',
       condition: '',
     },
     validationSchema: newPostingSchema,
@@ -51,13 +51,13 @@ const CreatePostingPage = () => {
         const formData = new FormData();
         formData.append('itemName', values.itemName);
         formData.append('itemDescription', values.itemDescription || '');
-        formData.append('timeLimit', values.timeLimit);
+        formData.append('maxRentalDays', values.maxRentalDays);
         formData.append('condition', values.condition);
         if (selectedImage) {
           formData.append('itemPhoto', selectedImage); // Add the item image to form data
         }
 
-        const response = await fetch('/api/auth/new-post', {
+        const response = await fetch('/api/posts', {
           method: 'POST',
           headers: {
             'Authorization': authHeader,
@@ -132,16 +132,16 @@ const CreatePostingPage = () => {
         <TextField
           sx={{ marginTop: 2 }}
           fullWidth
-          id="timeLimit"
-          name="timeLimit"
+          id="maxRentalDays"
+          name="maxRentalDays"
           label="Time Limit (days)"
           type="number"
           inputProps={{ min: 1, max: 30 }}
           value={formik.values.timeLimit}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.timeLimit && Boolean(formik.errors.timeLimit)}
-          helperText={formik.touched.timeLimit && formik.errors.timeLimit}
+          error={formik.touched.maxRentalDays && Boolean(formik.errors.maxRentalDays)}
+          helperText={formik.touched.maxRentalDays && formik.errors.maxRentalDays}
         />
 
         <FormControl fullWidth sx={{ marginTop: 2 }} error={formik.touched.condition && Boolean(formik.errors.condition)}>
@@ -155,9 +155,9 @@ const CreatePostingPage = () => {
             onBlur={formik.handleBlur}
             label="Condition"
           >
-            <MenuItem value="New">New</MenuItem>
-            <MenuItem value="GoodCondition">Good Condition</MenuItem>
-            <MenuItem value="BadCondition">Bad Condition</MenuItem>
+            <MenuItem value="NEW">New</MenuItem>
+            <MenuItem value="GOOD">Good Condition</MenuItem>
+            <MenuItem value="BAD">Bad Condition</MenuItem>
           </Select>
           {formik.touched.condition && formik.errors.condition && (
             <FormHelperText>{formik.errors.condition}</FormHelperText>
