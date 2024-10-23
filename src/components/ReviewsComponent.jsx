@@ -1,9 +1,12 @@
 import React from 'react'
 import { Avatar, Box, Card, CardActionArea, CardContent, CardHeader, Grid2, Modal, Rating, Typography } from '@mui/material';
 import { red } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
 
 const ReviewsComponent = ({ user }) => {
 
+
+    const navigate = useNavigate();
 
     const reviewsList = ["John", "Emily", "Mike", "Henry", "Gerald", "Marta", "Mattia"];
     const reviewContent = `Niente è paragonabile. Esiste forse cosa
@@ -21,6 +24,10 @@ const ReviewsComponent = ({ user }) => {
         setOpen(true);
     };      
     const handleClose = () => setOpen(false)
+
+    const redirectToProfile = (profileId) => {
+        navigate(`/profile/${profileId}`);
+    };
 
       const style = {
         position: 'absolute',
@@ -54,7 +61,7 @@ const ReviewsComponent = ({ user }) => {
                                 }
                                 //subheader={review}
                                 title={<Rating name="read-only" value={3} readOnly />}
-                                subheader='Riccardo Morelli'
+                                subheader={review}
                                 
                             />
                             <CardContent>
@@ -75,15 +82,17 @@ const ReviewsComponent = ({ user }) => {
                     {/* Check if selectedReviewIndex is valid */}
                     {selectedReviewIndex !== null && selectedReviewIndex < reviewsList.length && (
                         <Card sx={{ borderRadius: 4 }}>
-                            <CardHeader
-                                avatar={
-                                    <Avatar sx={{ bgcolor: red[500] }}>
-                                        {reviewsList[selectedReviewIndex].slice(0, 1)}
-                                    </Avatar>
-                                }
-                                title={<Rating name="read-only" value={3} readOnly />}
-                                subheader='Riccardo Morelli'
-                            />
+                            <CardActionArea onClick={() => redirectToProfile(1)}>
+                                <CardHeader 
+                                    avatar={
+                                        <Avatar sx={{ bgcolor: red[500] }} >
+                                            {reviewsList[selectedReviewIndex].slice(0, 1)}
+                                        </Avatar>
+                                    }
+                                    title={<Rating name="read-only" value={3} readOnly />}
+                                    subheader='Riccardo Morelli'
+                                />
+                            </CardActionArea>
                             <CardContent>
                                 <Typography>{reviewContent}</Typography>
                             </CardContent>
