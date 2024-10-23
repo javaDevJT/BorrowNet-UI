@@ -11,7 +11,6 @@ const MyProfilePage = () => {
 
     const authHeader = useAuthHeader();
 
-
     const navigate = useNavigate();
 
     const redirectToEditProfile = () => {
