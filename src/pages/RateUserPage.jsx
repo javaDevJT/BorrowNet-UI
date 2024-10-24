@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Button, Paper, Rating, TextField, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Paper, Rating, TextField, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import useFetchUserData from '../components/useFetchUserData'
+
 
 
 const RateUserPage = () => {
@@ -14,6 +16,18 @@ const RateUserPage = () => {
 
   const [description, setDescription] = useState(''); // State for form description
   const [rate, setRate] = useState(5); // State for form rate
+
+  const { userData, loading, error } = useFetchUserData(profileId, authHeader);
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
+  if (error) {
+    return <p>Error loading user data: {error.message}</p>;
+  }
+
+
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -58,7 +72,7 @@ const RateUserPage = () => {
   return (
     <React.Fragment>
       <Typography variant="h3" sx={{ my: 4, px: 3, color: "primary.main" }}>
-        Leave a Review to 
+        Leave a Review to {userData.firstName}
       </Typography>
       <Paper
         sx={{

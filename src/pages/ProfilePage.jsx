@@ -7,44 +7,22 @@ import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import ReportIcon from '@mui/icons-material/Report';
 import RateReviewIcon from '@mui/icons-material/RateReview';
+import useFetchUserData from '../components/useFetchUserData'
 
 const ProfilePage = () => {
   
   const { id } = useParams();
 
-  const authHeader = useAuthHeader();
-  const [userData, setUserData] = useState(null);
+    const authHeader = useAuthHeader();
+    const navigate = useNavigate();
+    const { userData, loading, error } = useFetchUserData(id, authHeader);
 
-  const navigate = useNavigate();
+    if (loading) {
+      return <CircularProgress />;
+    }
 
-    useEffect(() => {
-      // Example token from localStorage, replace with actual logic
-      // GET user data
-      fetch(`/api/user/public/${id}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': authHeader,
-          'Content-Type': 'application/json',
-        }
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setUserData(data);
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-      });
-    }, []);
-  
-    if (!userData) {
-      return (
-        <CircularProgress/>
-      );
+    if (error) {
+      return <p>Error loading user data: {error.message}</p>;
     }
 
 

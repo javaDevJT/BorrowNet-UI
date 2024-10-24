@@ -1,14 +1,35 @@
 import React from 'react';
-import { Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import useFetchUserData from '../components/useFetchUserData'
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+
 
 const ReportUserPage = () => {
 
+
+  const authHeader = useAuthHeader();
+  const authUser = useAuthUser()
   const { profileId } = useParams();
+  const navigate = useNavigate();
+  const [reportCategory, setReportCategory] = React.useState('');
+
   console.log(profileId)
 
 
-  const [reportCategory, setReportCategory] = React.useState('');
+  const { userData, loading, error } = useFetchUserData(profileId, authHeader);
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
+  if (error) {
+    return <p>Error loading user data: {error.message}</p>;
+  }
+
+
+
 
   const handleChange = (event) => {
     setReportCategory(event.target.value);
@@ -17,7 +38,7 @@ const ReportUserPage = () => {
   return (
     <React.Fragment>
       <Typography variant="h3" sx={{ my: 4, px: 3, color: "primary.main" }}>
-        Report ... 
+        Report {userData.firstName + ' ' + userData.lastName} 
       </Typography>
       <Paper
         sx={{
