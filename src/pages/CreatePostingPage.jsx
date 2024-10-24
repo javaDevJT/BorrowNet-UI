@@ -17,7 +17,7 @@ const newPostingSchema = object({
   maxRentalDays: number()
     .positive()
     .integer()
-    .max(30, 'Time Limit is 30 days')
+    .max(30, 'Time limit is 30 days')
     .required('Required'),
   condition: string()
     .max(30, 'Must be at most 30 characters long')
@@ -29,11 +29,16 @@ const CreatePostingPage = () => {
   const navigate = useNavigate();
   const authHeader = useAuthHeader();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [itemImage, setItemImage] = useState(''); // State for profile image URL
 
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result); // Set selected image for preview
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -51,7 +56,7 @@ const CreatePostingPage = () => {
         const formData = new FormData();
         formData.append('itemName', values.itemName);
         formData.append('itemDescription', values.itemDescription || '');
-        formData.append('maxRentalDays', values.maxRentalDays);
+        formData.append('maxRentalDays', parseInt(values.maxRentalDays, 10)); // Ensure maxRentalDays is an integer
         formData.append('condition', values.condition);
         if (selectedImage) {
           formData.append('itemPhoto', selectedImage); // Add the item image to form data
@@ -134,7 +139,7 @@ const CreatePostingPage = () => {
           fullWidth
           id="maxRentalDays"
           name="maxRentalDays"
-          label="Time Limit (days)"
+          label="Time limit (days)"
           type="number"
           inputProps={{ min: 1, max: 30 }}
           value={formik.values.timeLimit}
@@ -187,7 +192,7 @@ const CreatePostingPage = () => {
             <Avatar
               variant="square"
               alt="Preview"
-              src={URL.createObjectURL(selectedImage)} // Preview uploaded image
+              src={selectedImage instanceof File ? URL.createObjectURL(selectedImage) : selectedImage} // Preview uploaded image
               sx={{ width: 200, height: 200, m: 4 }}
             />
           )}
