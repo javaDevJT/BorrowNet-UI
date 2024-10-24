@@ -72,7 +72,7 @@ const RateUserPage = () => {
   return (
     <React.Fragment>
       <Typography variant="h3" sx={{ my: 4, px: 3, color: "primary.main" }}>
-        Leave a Review to {userData.firstName}
+        Leave a review to {userData.firstName}
       </Typography>
       <Paper
         sx={{
