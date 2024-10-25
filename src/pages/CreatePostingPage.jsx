@@ -10,7 +10,7 @@ const newPostingSchema = object({
   itemName: string()
     .min(1, 'The title must be at least 1 character long')
     .max(30, 'The title must be at most 30 characters long')
-    .matches(/^[a-zA-Z]+$/, 'The title must contain only letters')
+    .matches(/^[a-zA-Z\s]*$/, 'The title must contain only letters')
     .required('Required'),
   itemDescription: string()
     .max(500, 'Description must be at most 500 characters'),

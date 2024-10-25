@@ -1,6 +1,7 @@
 import { Avatar, Box, Card, CardContent, Pagination, Stack, Typography, Alert } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import SearchBarComponent from "../components/SearchBarComponent";
 
 const HomePage = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -49,6 +50,7 @@ const HomePage = () => {
       )}
       {postList.length > 0 ?
           <Stack>
+            <SearchBarComponent />
             {postList.map((post, index) => (
                 <Card key={index} sx={{borderRadius: 4, my: 1, mx: 5}}>
                   <CardContent>
