@@ -37,6 +37,10 @@ const MainLayout = () => {
     navigate('/new-post');
   };
 
+  const redirectToPublicProfileSelectPage = () => {
+    navigate('/profiles-public');
+  };
+
   const logOut = () => {
     signOut();
     redirectToLogin();
@@ -80,7 +84,15 @@ const MainLayout = () => {
             <ListItemText primary='My Profile' />
           </ListItemButton>
         </ListItem>
-        <ListItem key='3' disablePadding>
+          <ListItem key='3' disablePadding>
+            <ListItemButton onClick={redirectToPublicProfileSelectPage}>
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary='Public Profiles' />
+            </ListItemButton>
+        </ListItem>
+        <ListItem key='4' disablePadding>
           <ListItemButton onClick={redirectToCreatePostingPage}>
             <ListItemIcon>
               <AddToPhotosIcon />
@@ -89,7 +101,7 @@ const MainLayout = () => {
           </ListItemButton>
         </ListItem>
         <Divider />
-        <ListItem key='4' disablePadding>
+        <ListItem key='5' disablePadding>
           <ListItemButton onClick={logOut}>
             <ListItemIcon>
               <LogoutIcon />

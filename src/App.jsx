@@ -19,7 +19,8 @@ import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
 import RateUserPage from './pages/RateUserPage';
 import ReportUserPage from './pages/ReportUserPage';
 import CreatePostingPage from './pages/CreatePostingPage';
-import TryPage from './pages/TryPage'; {/* Added this line */}
+import TryPage from './pages/TryPage';
+import UserProfileList from "./pages/UserProfileList.jsx"; {/* Added this line */}
 
 
 const App = () => {
@@ -45,6 +46,7 @@ const App = () => {
                     <Route path='/my-profile' element={<MyProfilePage/>}/>
                     <Route path='/new-post' element={<CreatePostingPage/>}/>
                     <Route path='/home' element={<HomePage/>}/>
+                    <Route path='/profiles-public' element={<UserProfileList/>}/>
                     <Route path='/try' element={<TryPage/>}/> {/* Added this line */}
                     <Route path='*' element={<NotFoundPage/>}/>
                 </Route>
