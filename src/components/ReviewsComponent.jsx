@@ -1,23 +1,34 @@
 import React from 'react'
-import { Avatar, Box, Card, CardActionArea, CardContent, CardHeader, Grid2, Modal, Rating, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardActionArea, CardContent, CardHeader, CircularProgress, Grid2, Modal, Rating, Typography } from '@mui/material';
 import { red } from '@mui/material/colors';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useFetchUserData from '../components/useFetchUserData'
+
 
 const ReviewsComponent = () => {
 
     const navigate = useNavigate();
-
-    const reviewsList = ["John", "Emily", "Mike", "Henry", "Gerald", "Marta", "Mattia"];
-    const reviewContent = `Niente è paragonabile. Esiste forse cosa
-      che non sia tutta sola con sé stessa e indicibile?
-      Invano diamo nomi, solo è dato accettare
-      e accordarci che forse qua un lampo, là uno sguardo
-      ci abbia sfiorato, come
-      se proprio in questo consistesse vivere
-      la nostra vita.`
-
+    const { id } = useParams();
+    const authHeader = useAuthHeader();
     const [open, setOpen] = React.useState(false);
     const [selectedReviewIndex, setSelectedReviewIndex] = React.useState(null);
+
+    const { userData, loading, error } = useFetchUserData(id, authHeader);
+
+
+    if (loading) {
+      return <CircularProgress />;
+    }
+
+    if (error) {
+      return <p>Error loading user data: {error.message}</p>;
+    }
+
+    const reviewsList = userData.ratingsReceived;
+    console.log(reviewsList)
+
+
     const handleOpen = (index) => {
         setSelectedReviewIndex(index);
         setOpen(true);
@@ -55,16 +66,15 @@ const ReviewsComponent = () => {
                             <CardHeader
                                 avatar={
                                 <Avatar sx={{ bgcolor: red[500] }}>
-                                    {review.slice(0,1)}
+                                    A
                                 </Avatar>
                                 }
-                                //subheader={review}
-                                title={<Rating name="read-only" value={3} readOnly />}
-                                subheader={review}
+                                title={<Rating name="read-only" value={review.rating} readOnly />}
+                                //subheader={1}
                                 
                             />
                             <CardContent>
-                                <Typography>{reviewContent.slice(0,100) + " ..."}</Typography>
+                                <Typography>{review.details}</Typography>
                             </CardContent>
                         </CardActionArea>
                       </Card>
@@ -85,15 +95,15 @@ const ReviewsComponent = () => {
                                 <CardHeader 
                                     avatar={
                                         <Avatar sx={{ bgcolor: red[500] }} >
-                                            {reviewsList[selectedReviewIndex].slice(0, 1)}
+                                            A
                                         </Avatar>
                                     }
-                                    title={<Rating name="read-only" value={3} readOnly />}
-                                    subheader='Riccardo Morelli'
+                                    title={<Rating name="read-only" value={reviewsList[selectedReviewIndex].rating} readOnly />}
+                                    //subheader='Riccardo Morelli'
                                 />
                             </CardActionArea>
                             <CardContent>
-                                <Typography>{reviewContent}</Typography>
+                                <Typography>{reviewsList[selectedReviewIndex].details}</Typography>
                             </CardContent>
                         </Card>
                     )}

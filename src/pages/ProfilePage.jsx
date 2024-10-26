@@ -11,7 +11,7 @@ import useFetchUserData from '../components/useFetchUserData'
 
 const ProfilePage = () => {
   
-  const { id } = useParams();
+    const { id } = useParams();
 
     const authHeader = useAuthHeader();
     const navigate = useNavigate();
