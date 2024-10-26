@@ -70,7 +70,7 @@ const HomePage = () => {
                           {post.itemDescription}
                         </Typography>
                       </Box>
-                      <Avatar variant='square' src={post.itemPhoto} sx={{m: 4, width: 120, height: 120}}/>
+                      <Avatar variant='square' src={post.itemPhoto ? 'data:image/JPG;base64,' + post.itemPhoto : 'src/assets/n-a-512.png'} sx={{m: 4, width: 120, height: 120}}/>
                     </Box>
                   </CardContent>
                 </Card>
