@@ -4,6 +4,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import GroupIcon from '@mui/icons-material/Group';
 
 
 import React, { useEffect } from 'react';
@@ -87,7 +88,7 @@ const MainLayout = () => {
           <ListItem key='3' disablePadding>
             <ListItemButton onClick={redirectToPublicProfileSelectPage}>
               <ListItemIcon>
-                <AccountCircleIcon />
+                <GroupIcon />
               </ListItemIcon>
               <ListItemText primary='Public Profiles' />
             </ListItemButton>
