@@ -11,8 +11,6 @@ const ReviewsComponent = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const authHeader = useAuthHeader();
-    const [open, setOpen] = React.useState(false);
-    const [selectedReviewIndex, setSelectedReviewIndex] = React.useState(null);
 
     const { userData, loading, error } = useFetchUserData(id, authHeader);
 
@@ -29,15 +27,7 @@ const ReviewsComponent = () => {
     const reviewsList = userData.ratingsReceived;
     console.log(reviewsList)
 
-
-    const handleOpen = (index) => {
-        setSelectedReviewIndex(index);
-        setOpen(true);
-    };      
-    const handleClose = () => setOpen(false)
-
     const redirectToProfile = (profileId) => {
-        setOpen(false);
         navigate(`/profile/${profileId}`);
     };
 
@@ -66,7 +56,7 @@ const ReviewsComponent = () => {
                       <Card
                         sx = {{borderRadius: 4}}
                       >
-                        <CardActionArea onClick={() => handleOpen(index)}>
+                        <CardActionArea onClick={() => redirectToProfile(review.submitter)}>
                             <CardHeader
                                 title={<Rating name="read-only" value={review.rating} readOnly />}                                
                             />
@@ -78,28 +68,7 @@ const ReviewsComponent = () => {
                   </Grid2>
               ))}
           </Grid2>
-          <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    {/* Check if selectedReviewIndex is valid */}
-                    {selectedReviewIndex !== null && selectedReviewIndex < reviewsList.length && (
-                        <Card sx={{ borderRadius: 4 }}>
-                            <CardActionArea onClick={() => redirectToProfile(reviewsList[selectedReviewIndex].submitter)}>
-                                <CardHeader 
-                                    title={<Rating name="read-only" value={reviewsList[selectedReviewIndex].rating} readOnly />}
-                                />
-                            </CardActionArea>
-                            <CardContent>
-                                <Typography>{reviewsList[selectedReviewIndex].details}</Typography>
-                            </CardContent>
-                        </Card>
-                    )}
-                </Box>
-            </Modal>
+          
       </React.Fragment>
   )
 }
