@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import ProfileComponent from '../components/ProfileComponent';
 import ReviewsComponent from '../components/ReviewsComponent';
@@ -46,7 +46,7 @@ const ProfilePage = () => {
         </Button>
       </Stack>
       <Box>
-          <ProfileComponent firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={'data:image/JPG;base64,' + userData.userPreferences.profilePicture}/>
+          <ProfileComponent id={id} firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={'data:image/JPG;base64,' + userData.userPreferences.profilePicture}/>
           <ReviewsComponent/>
           <PostsComponent/>    
       </Box>

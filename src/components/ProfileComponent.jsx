@@ -1,8 +1,41 @@
 import { Avatar, Box, Paper, Typography } from '@mui/material'
 import { red } from '@mui/material/colors'
 import React from 'react'
+import { useEffect, useState } from 'react';
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
-const ProfileComponent = ({ firstName, lastName, description, profilePicture }) => {
+
+const ProfileComponent = ({ id, firstName, lastName, description, profilePicture }) => {
+  const [ratings, setRatings] = useState([]);
+
+  const authHeader = useAuthHeader();
+
+  useEffect(() => {
+      if (id) {
+        fetch(`/api/${id}/rate`, {
+          method: 'GET',
+          headers: {
+            'Authorization': authHeader,
+            'Content-Type': 'application/json'
+          }
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response error.');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setRatings(data);
+          })
+          .catch((error) => {
+            console.error('Error fetching ratings:', error);
+          });
+      }
+    }, [id, authHeader]);
+
+  const averageRating = ratings.length > 0 ? (ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length).toFixed(2) : 'N/A';
+
   return (
     <Box
       sx={{
@@ -33,15 +66,13 @@ const ProfileComponent = ({ firstName, lastName, description, profilePicture }) 
           }}
         >
           <Avatar
-            src={profilePicture} 
+            src={profilePicture || ''} 
             sx={{ 
               bgcolor: red[500],
               width: 86, 
               height: 86,
             }}
-          >
-            
-          </Avatar>
+          />
           <Typography variant='h5'>{ firstName + ' ' + lastName}</Typography>
         </Box>
         <Box
@@ -54,11 +85,11 @@ const ProfileComponent = ({ firstName, lastName, description, profilePicture }) 
           }}
         >
           <Box>
-            <Typography variant='h4'>45</Typography>
+            <Typography variant='h4'>{ratings.length}</Typography>
             <Typography>Reviews</Typography>
           </Box>
           <Box>
-            <Typography variant='h4'>3.47</Typography>
+            <Typography variant='h4'>{averageRating}</Typography>
             <Typography>Rating</Typography>
           </Box>
         </Box>
@@ -68,12 +99,11 @@ const ProfileComponent = ({ firstName, lastName, description, profilePicture }) 
           m: 5,
         }}
       >
-        <Typography variant='h3' sx={{ color: "primary.main"}}>About Me</Typography>
+        <Typography variant='h3' sx={{ color: "primary.main" }}>About Me</Typography>
         <Typography>{description}</Typography>
       </Box>
 
     </Box>
-    
   )
 }
 
