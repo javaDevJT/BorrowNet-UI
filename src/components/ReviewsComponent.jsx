@@ -37,6 +37,7 @@ const ReviewsComponent = () => {
     const handleClose = () => setOpen(false)
 
     const redirectToProfile = (profileId) => {
+        setOpen(false);
         navigate(`/profile/${profileId}`);
     };
 
@@ -51,12 +52,14 @@ const ReviewsComponent = () => {
 
   return (  
     <React.Fragment>
-      <Typography
-          variant="h3"
-          sx={{my: 4, color: "primary.main"}}
-          >
-              Reviews
-      </Typography>
+        {reviewsList.length >= 1 && (
+        <Typography
+            variant="h3"
+            sx={{ my: 4, color: "primary.main" }}
+        >
+            Reviews
+        </Typography>
+        )}
           <Grid2 container spacing={3}>
               {reviewsList.map((review, index) => (
                   <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={index}>
@@ -65,14 +68,7 @@ const ReviewsComponent = () => {
                       >
                         <CardActionArea onClick={() => handleOpen(index)}>
                             <CardHeader
-                                avatar={
-                                <Avatar sx={{ bgcolor: red[500] }}>
-                                    A
-                                </Avatar>
-                                }
-                                title={<Rating name="read-only" value={review.rating} readOnly />}
-                                //subheader={1}
-                                
+                                title={<Rating name="read-only" value={review.rating} readOnly />}                                
                             />
                             <CardContent>
                                 <Typography>{review.details}</Typography>
@@ -92,15 +88,9 @@ const ReviewsComponent = () => {
                     {/* Check if selectedReviewIndex is valid */}
                     {selectedReviewIndex !== null && selectedReviewIndex < reviewsList.length && (
                         <Card sx={{ borderRadius: 4 }}>
-                            <CardActionArea onClick={() => redirectToProfile(1)}>
+                            <CardActionArea onClick={() => redirectToProfile(reviewsList[selectedReviewIndex].submitter)}>
                                 <CardHeader 
-                                    avatar={
-                                        <Avatar sx={{ bgcolor: red[500] }} >
-                                            A
-                                        </Avatar>
-                                    }
                                     title={<Rating name="read-only" value={reviewsList[selectedReviewIndex].rating} readOnly />}
-                                    //subheader='Riccardo Morelli'
                                 />
                             </CardActionArea>
                             <CardContent>
