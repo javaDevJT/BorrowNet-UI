@@ -56,7 +56,7 @@ const MyProfilePage = () => {
         <Button variant="contained" startIcon={<EditIcon />} color='primary' size='large' sx={{mx:6, marginTop:2}} onClick={redirectToEditProfile}>
             Edit
         </Button>
-        <ProfileComponent firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={'data:image/JPG;base64,' + userData.userPreferences.profilePicture}/>
+        <ProfileComponent firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={'data:image/JPG;base64,' + userData.userPreferences.profilePicture} ratings={userData.ratingsReceived}/>
       </Box>
     );
 }

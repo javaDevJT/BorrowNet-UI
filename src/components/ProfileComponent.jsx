@@ -5,36 +5,9 @@ import { useEffect, useState } from 'react';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 
-const ProfileComponent = ({ id, firstName, lastName, description, profilePicture }) => {
-  const [ratings, setRatings] = useState([]);
+const ProfileComponent = ({ id, firstName, lastName, description, profilePicture, ratings }) => {
 
-  const authHeader = useAuthHeader();
-
-  useEffect(() => {
-      if (id) {
-        fetch(`/api/${id}/rate`, {
-          method: 'GET',
-          headers: {
-            'Authorization': authHeader,
-            'Content-Type': 'application/json'
-          }
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error('Network response error.');
-            }
-            return response.json();
-          })
-          .then((data) => {
-            setRatings(data);
-          })
-          .catch((error) => {
-            console.error('Error fetching ratings:', error);
-          });
-      }
-    }, [id, authHeader]);
-
-  const averageRating = ratings.length > 0 ? (ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length).toFixed(2) : 'N/A';
+  const averageRating = ratings.length > 0 ? getAverageRating(ratings) : 'N/A';
 
   return (
     <Box
@@ -105,6 +78,19 @@ const ProfileComponent = ({ id, firstName, lastName, description, profilePicture
 
     </Box>
   )
+
+    function getAverageRating(ratings) {
+        let total = 0;
+        let count = 0;
+        ratings.forEach(rating => {
+            total += rating.rating;
+            count += 1;
+        });
+        if (count == 0) {
+            return 'User not yet rated. ';
+        }
+        return (total / count) + ' ';
+    }
 }
 
 export default ProfileComponent
