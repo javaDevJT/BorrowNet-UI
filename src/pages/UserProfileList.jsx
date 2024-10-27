@@ -52,7 +52,7 @@ const HomePage = () => {
             <SearchBarComponent placeholder={"Search Users"} />
             {userList.map((user, index) => (
                 <Link key={index} to={'/profile/' + user.id}>
-                <Card hoverable sx={{borderRadius: 4, my: 1, mx: 5}}>
+                <Card hoverable="true" sx={{borderRadius: 4, my: 1, mx: 5}}>
                   <CardContent >
                     <Box sx={{
                       display: 'flex',
@@ -68,7 +68,7 @@ const HomePage = () => {
                         </Typography>
                         <Typography variant="body2" sx={{color: 'text.secondary', my: 2}}>
                           {'Average Rating: ' + getAverageRating(user.ratingsReceived)}
-                          <Rating size={'small'} value={getAverageRating(user.ratingsReceived)} readOnly={true}>
+                          <Rating size={'small'} value={Number(getAverageRating(user.ratingsReceived))} readOnly={true}>
                           </Rating>
                         </Typography>
                         <Typography variant="body2" sx={{color: 'text.secondary', my: 2}}>
