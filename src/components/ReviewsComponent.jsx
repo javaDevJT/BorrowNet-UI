@@ -22,7 +22,8 @@ const ReviewsComponent = () => {
     }
 
     if (error) {
-      return <p>Error loading user data: {error.message}</p>;
+      console.log(error.message);
+      return;
     }
 
     const reviewsList = userData.ratingsReceived;

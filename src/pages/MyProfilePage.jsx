@@ -57,8 +57,6 @@ const MyProfilePage = () => {
             Edit
         </Button>
         <ProfileComponent firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={'data:image/JPG;base64,' + userData.userPreferences.profilePicture}/>
-        <ReviewsComponent/>
-        <PostsComponent/>    
       </Box>
     );
 }
