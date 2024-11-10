@@ -1,8 +1,7 @@
 import {
     Route,
-    createBrowserRouter,
-    createRoutesFromElements,
-    RouterProvider, Routes, BrowserRouter,
+    Routes,
+    BrowserRouter,
 } from 'react-router-dom';
 import React from 'react'
 import RegistrationPage from './pages/RegistrationPage';
@@ -20,8 +19,8 @@ import RateUserPage from './pages/RateUserPage';
 import ReportUserPage from './pages/ReportUserPage';
 import CreatePostingPage from './pages/CreatePostingPage';
 import TryPage from './pages/TryPage';
-import UserProfileList from "./pages/UserProfileList.jsx"; {/* Added this line */}
-
+import UserProfileList from "./pages/UserProfileList.jsx";
+import SettingsPage from './pages/SettingsPage.jsx';
 
 const App = () => {
 
@@ -45,9 +44,10 @@ const App = () => {
                     <Route path='/edit-profile' element={<EditProfilePage/>}/>
                     <Route path='/my-profile' element={<MyProfilePage/>}/>
                     <Route path='/new-post' element={<CreatePostingPage/>}/>
+                    <Route path='/settings' element={<SettingsPage/>}/>
                     <Route path='/home' element={<HomePage/>}/>
                     <Route path='/profiles-public' element={<UserProfileList/>}/>
-                    <Route path='/try' element={<TryPage/>}/> {/* Added this line */}
+                    <Route path='/try' element={<TryPage/>}/>
                     <Route path='*' element={<NotFoundPage/>}/>
                 </Route>
             </Route>

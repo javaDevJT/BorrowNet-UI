@@ -5,13 +5,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import GroupIcon from '@mui/icons-material/Group';
-
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate, useLocation} from 'react-router-dom'
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-
 
 
 const MainLayout = () => {
@@ -42,6 +41,10 @@ const MainLayout = () => {
     navigate('/profiles-public');
   };
 
+  const redirectToSettingsPage = () => {
+    navigate('/settings');
+  }
+
   const logOut = () => {
     signOut();
     redirectToLogin();
@@ -56,14 +59,11 @@ const MainLayout = () => {
   }, []);
 
 
-
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-
-
 
 
   const DrawerList = (
@@ -101,8 +101,16 @@ const MainLayout = () => {
             <ListItemText primary='New Posting' />
           </ListItemButton>
         </ListItem>
-        <Divider />
         <ListItem key='5' disablePadding>
+          <ListItemButton onClick={redirectToSettingsPage}>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary='Settings' />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        <ListItem key='6' disablePadding>
           <ListItemButton onClick={logOut}>
             <ListItemIcon>
               <LogoutIcon />
