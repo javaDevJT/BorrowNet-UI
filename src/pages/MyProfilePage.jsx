@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import ProfileComponent from '../components/ProfileComponent';
-import ReviewsComponent from '../components/ReviewsComponent';
-import PostsComponent from '../components/PostsComponent';
 import { Box, Button, CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';

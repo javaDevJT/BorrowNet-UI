@@ -19,9 +19,7 @@ const newPostingSchema = object({
     .integer()
     .max(30, 'Time limit is 30 days')
     .required('Required'),
-  condition: string()
-    .max(30, 'Must be at most 30 characters long')
-    .required('Required')
+  condition: string().required('Required')
 });
 
 const CreatePostingPage = () => {
