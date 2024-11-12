@@ -92,7 +92,7 @@ const ChatPage = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
+    <Container maxWidth="md" sx={{ mt: 1 }}>
         <ChatContainer>
             <Header>
                 <Box display="flex" alignItems="center" gap={2}>
