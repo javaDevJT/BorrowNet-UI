@@ -1,26 +1,47 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
+import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
 import SearchIcon from '@mui/icons-material/Search';
-import * as PropTypes from "prop-types";
+import IconButton from '@mui/material/IconButton';
 
-class SearchBarComponent extends React.Component {
-    render() {
-        let {placeholder} = this.props;
-        return (
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                <Paper component="form" sx={{p: '2px 4px', display: 'flex', alignItems: 'center', width: 400}}>
-                    <InputBase sx={{ml: 1, flex: 1}} placeholder={placeholder}/>
-                    <IconButton type="button" sx={{p: '10px'}} aria-label="search">
-                        <SearchIcon/>
-                    </IconButton>
-                </Paper>
-            </div>
-        );
-    }
-}
+const SearchBarComponent = ({ postList, setFilteredPostList }) => {
+  const [query, setQuery] = useState('');
 
-SearchBarComponent.propTypes = {placeholder: PropTypes.any}
+  const handleSearchChange = (event) => {
+    const searchQuery = event.target.value.toLowerCase();
+    setQuery(searchQuery);
 
-export default SearchBarComponent
+    // Filter the post list based on the search query
+    const filteredPosts = postList.filter((post) => 
+      post.itemName.toLowerCase().includes(searchQuery) || 
+      (post.itemDescription && post.itemDescription.toLowerCase().includes(searchQuery))
+    );
+
+    // Update the filtered post list in HomePage
+    setFilteredPostList(filteredPosts);
+  };
+
+  return (
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div>
+            <TextField
+            id="outlined-basic"
+            variant="outlined"
+            label="Search Items"
+            value={query}
+            onChange={handleSearchChange}
+            fullWidth
+            margin="normal"
+            InputProps={{
+                endAdornment: (
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                ),
+              }}
+            />
+        </div>
+    </div>
+);
+};
+
+export default SearchBarComponent;
