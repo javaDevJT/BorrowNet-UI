@@ -1,9 +1,6 @@
-import { Avatar, Box, Paper, Typography } from '@mui/material'
-import { red } from '@mui/material/colors'
-import React from 'react'
-import { useEffect, useState } from 'react';
-import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-
+import { Avatar, Box, Paper, Typography } from '@mui/material';
+import { red } from '@mui/material/colors';
+import React from 'react';
 
 const ProfileComponent = ({ id, firstName, lastName, description, profilePicture, ratings }) => {
 

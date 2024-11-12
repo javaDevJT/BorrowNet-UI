@@ -1,4 +1,4 @@
-import { AppBar, Box, Container, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Container, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -7,12 +7,10 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import GroupIcon from '@mui/icons-material/Group';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ChatIcon from '@mui/icons-material/Chat';
-
 import React, { useEffect } from 'react';
-import { Outlet, useNavigate, useLocation} from 'react-router-dom'
+import { Outlet, useNavigate, useLocation} from 'react-router-dom';
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-
 
 const MainLayout = () => {
 
@@ -20,7 +18,6 @@ const MainLayout = () => {
   const isAuthenticated = useIsAuthenticated();
   const navigate = useNavigate();
   const location = useLocation();
-
 
   const redirectToMyProfilePage = () => {
     navigate('/my-profile');

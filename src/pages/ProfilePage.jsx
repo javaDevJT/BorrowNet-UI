@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProfileComponent from '../components/ProfileComponent';
 import ReviewsComponent from '../components/ReviewsComponent';
@@ -7,9 +7,8 @@ import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import ReportIcon from '@mui/icons-material/Report';
 import RateReviewIcon from '@mui/icons-material/RateReview';
-import useFetchUserData from '../components/useFetchUserData'
+import useFetchUserData from '../components/useFetchUserData';
 import ChatIcon from '@mui/icons-material/Chat';
-
 
 const ProfilePage = () => {
   

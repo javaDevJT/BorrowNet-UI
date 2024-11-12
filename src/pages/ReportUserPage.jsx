@@ -5,10 +5,8 @@ import useFetchUserData from '../components/useFetchUserData'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
-
 const ReportUserPage = () => {
-
-
+  
   const authHeader = useAuthHeader();
   const authUser = useAuthUser()
   const { profileId } = useParams();
