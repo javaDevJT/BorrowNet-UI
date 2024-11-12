@@ -75,7 +75,7 @@ const HomePage = () => {
                           {'Items Posted: ' + user.postings.length}
                         </Typography>
                       </Box>
-                      <Avatar variant='square' src={user.userPreferences.profilePicture ? 'data:image/JPG;base64,' + user.userPreferences.profilePicture : 'src/assets/n-a-512.png'} sx={{m: 4, width: 120, height: 120}}/>
+                      <Avatar  src={user.userPreferences.profilePicture ? 'data:image/JPG;base64,' + user.userPreferences.profilePicture : 'src/assets/n-a-512.png'} sx={{m: 4, width: 120, height: 120}}/>
                     </Box>
                   </CardContent>
                 </Card>

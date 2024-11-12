@@ -8,6 +8,8 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import ReportIcon from '@mui/icons-material/Report';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import useFetchUserData from '../components/useFetchUserData'
+import ChatIcon from '@mui/icons-material/Chat';
+
 
 const ProfilePage = () => {
   
@@ -34,10 +36,17 @@ const ProfilePage = () => {
       navigate(`/profile/${id}/report`);
     };
 
+    const redirectToChatPage = () => {
+      //navigate(`/profile/${id}/report`);
+    };
+
 
   return (
     <React.Fragment>
       <Stack direction="row" spacing={2}>
+        <Button variant="contained" startIcon={<ChatIcon />} onClick={redirectToChatPage}>
+          Send message
+        </Button>
         <Button variant="contained" startIcon={<RateReviewIcon />} onClick={redirectToRatePage}>
           Rate
         </Button>

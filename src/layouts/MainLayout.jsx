@@ -6,6 +6,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import GroupIcon from '@mui/icons-material/Group';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ChatIcon from '@mui/icons-material/Chat';
 
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate, useLocation} from 'react-router-dom'
@@ -25,6 +26,10 @@ const MainLayout = () => {
     navigate('/my-profile');
   };
   
+  const redirectToMyChatsPage = () => {
+    navigate('/my-chats');
+  };
+
   const redirectToHome = () => {
     navigate('/home');
   };
@@ -83,6 +88,14 @@ const MainLayout = () => {
               <AccountCircleIcon />
             </ListItemIcon>
             <ListItemText primary='My Profile' />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key='7' disablePadding>
+          <ListItemButton onClick={redirectToMyChatsPage}>
+            <ListItemIcon>
+              <ChatIcon />
+            </ListItemIcon>
+            <ListItemText primary='My Chats' />
           </ListItemButton>
         </ListItem>
           <ListItem key='3' disablePadding>

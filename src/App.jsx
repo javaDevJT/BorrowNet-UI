@@ -21,6 +21,8 @@ import CreatePostingPage from './pages/CreatePostingPage';
 import TryPage from './pages/TryPage';
 import UserProfileList from "./pages/UserProfileList.jsx";
 import SettingsPage from './pages/SettingsPage.jsx';
+import MyChatsPage from './pages/MyChatsPage.jsx';
+import ChatPage from './pages/ChatPage.jsx';
 
 const App = () => {
 
@@ -43,6 +45,8 @@ const App = () => {
                     <Route path='/profile/:profileId/report' element={<ReportUserPage/>}/>
                     <Route path='/edit-profile' element={<EditProfilePage/>}/>
                     <Route path='/my-profile' element={<MyProfilePage/>}/>
+                    <Route path='/my-chats' element={<MyChatsPage/>}/>
+                    <Route path='/chat/:profileId' element={<ChatPage/>}/>
                     <Route path='/new-post' element={<CreatePostingPage/>}/>
                     <Route path='/settings' element={<SettingsPage/>}/>
                     <Route path='/home' element={<HomePage/>}/>
