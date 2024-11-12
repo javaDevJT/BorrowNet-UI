@@ -3,9 +3,7 @@ import { Box, Button, CircularProgress, Paper, Rating, TextField, Typography } f
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import useFetchUserData from '../components/useFetchUserData'
-
-
+import useFetchUserData from '../components/useFetchUserData';
 
 const RateUserPage = () => {
 

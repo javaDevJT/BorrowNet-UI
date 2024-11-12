@@ -1,9 +1,8 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 import React, { useState } from "react";
 import {Box, TextField, IconButton, Typography, Avatar, Paper, Container, Snackbar, Alert} from "@mui/material";
 import { styled } from "@mui/system";
 import SendIcon from '@mui/icons-material/Send';
-
 
 const ChatContainer = styled(Paper)(() => ({
   height: "80vh",

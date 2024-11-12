@@ -10,13 +10,11 @@ const SearchBarComponent = ({ postList, setFilteredPostList }) => {
     const searchQuery = event.target.value.toLowerCase();
     setQuery(searchQuery);
 
-    // Filter the post list based on the search query
+    // Filter postList based on the search query
     const filteredPosts = postList.filter((post) => 
-      post.itemName.toLowerCase().includes(searchQuery) || 
-      (post.itemDescription && post.itemDescription.toLowerCase().includes(searchQuery))
-    );
+      post.itemName.toLowerCase().includes(searchQuery));
 
-    // Update the filtered post list in HomePage
+    // Update filtered postList in HomePage
     setFilteredPostList(filteredPosts);
   };
 

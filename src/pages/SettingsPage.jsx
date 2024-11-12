@@ -1,13 +1,4 @@
-import React from 'react'
-
-/*
-  SettingsPage is a page that contains the settings of the application.
-  It should contain the following:
-  - language of the application
-  - theme of the application (light or dark)
-  - maximum distance preference for browsing postings (with a default value of 1 km)
-*/
-
+import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Button, FormControl, FormLabel, MenuItem, Select, InputLabel, Typography, Switch, TextField, Box } from '@mui/material';
 

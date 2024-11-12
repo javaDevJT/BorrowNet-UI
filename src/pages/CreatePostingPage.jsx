@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { number, object, string } from 'yup'
+import { number, object, string } from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Button, TextField, Typography, Box, Alert, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material'
+import { Avatar, Button, TextField, Typography, Box, Alert, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 

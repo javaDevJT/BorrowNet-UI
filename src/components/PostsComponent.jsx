@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Card, CardHeader, CardMedia, Grid2, Typography } from '@mui/material';
 
 const PostsComponent = () => {

@@ -1,10 +1,8 @@
-import React from 'react'
-import { Avatar, Box, Card, CardActionArea, CardContent, CardHeader, CircularProgress, Grid2, Modal, Rating, Typography } from '@mui/material';
-import { red } from '@mui/material/colors';
+import React from 'react';
+import { Card, CardActionArea, CardContent, CardHeader, CircularProgress, Grid2, Rating, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
-import useFetchUserData from '../components/useFetchUserData'
-
+import useFetchUserData from '../components/useFetchUserData';
 
 const ReviewsComponent = () => {
 
