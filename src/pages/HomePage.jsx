@@ -6,6 +6,7 @@ import SearchBarComponent from "../components/SearchBarComponent";
 const HomePage = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [postList, setPostList] = useState([]);
+  const [filteredPostList, setFilteredPostList] = useState([]);
   const [pageNo, setPageNo] = useState(1); // Current page number
   const [totalPages, setTotalPages] = useState(1); // Will be updated based on total posts
   const [sortBy, setSortBy] = useState('id'); // Sorting parameter, default to 'id'
@@ -28,6 +29,7 @@ const HomePage = () => {
       })
       .then((data) => {
         setPostList(data.content);
+        setFilteredPostList(data.content);
         setTotalPages(data.totalPages);
       })
       .catch((error) => {
@@ -49,8 +51,8 @@ const HomePage = () => {
       )}
       {postList.length > 0 ?
           <Stack>
-            <SearchBarComponent placeholder={'Search Items'} />
-            {postList.map((post, index) => (
+            <SearchBarComponent postList={postList} setFilteredPostList={setFilteredPostList}/>
+            {filteredPostList.map((post, index) => (
                 <Card key={index} sx={{borderRadius: 4, my: 1, mx: 5}}>
                   <CardContent>
                     <Box sx={{

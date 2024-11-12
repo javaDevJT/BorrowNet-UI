@@ -18,7 +18,6 @@ import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
 import RateUserPage from './pages/RateUserPage';
 import ReportUserPage from './pages/ReportUserPage';
 import CreatePostingPage from './pages/CreatePostingPage';
-import TryPage from './pages/TryPage';
 import UserProfileList from "./pages/UserProfileList.jsx";
 import SettingsPage from './pages/SettingsPage.jsx';
 import MyChatsPage from './pages/MyChatsPage.jsx';
@@ -34,7 +33,7 @@ const App = () => {
     });
 
     const BorrowNetRouter = () => {
-   return ( <BrowserRouter>
+   return (<BrowserRouter>
         <Routes>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/registration' element={<RegistrationPage/>}/>
@@ -51,7 +50,6 @@ const App = () => {
                     <Route path='/settings' element={<SettingsPage/>}/>
                     <Route path='/home' element={<HomePage/>}/>
                     <Route path='/profiles-public' element={<UserProfileList/>}/>
-                    <Route path='/try' element={<TryPage/>}/>
                     <Route path='*' element={<NotFoundPage/>}/>
                 </Route>
             </Route>
