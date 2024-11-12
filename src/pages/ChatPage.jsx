@@ -1,16 +1,6 @@
 import { useParams } from 'react-router-dom'
 import React, { useState } from "react";
-import {
-  Box,
-  TextField,
-  IconButton,
-  Typography,
-  Avatar,
-  Paper,
-  Container,
-  Snackbar,
-  Alert,
-} from "@mui/material";
+import {Box, TextField, IconButton, Typography, Avatar, Paper, Container, Snackbar, Alert} from "@mui/material";
 import { styled } from "@mui/system";
 import SendIcon from '@mui/icons-material/Send';
 
@@ -51,11 +41,10 @@ const MessageBubble = styled(Box, {
     backgroundColor: isOwn ? "#2196f3" : "#f5f5f5",
     color: isOwn ? "white" : "black",
     alignSelf: isOwn ? "flex-end" : "flex-start",
+    wordWrap: "break-word", // Allows long words to break to the next line
+    whiteSpace: "pre-wrap", // Preserves whitespace and line breaks
     transition: "transform 0.2s",
-    "&:hover": {
-      transform: "scale(1.02)"
-    }
-  }));
+}));
 
 const InputContainer = styled(Box)({
   padding: "16px",
@@ -124,31 +113,33 @@ const ChatPage = () => {
             </MessageContainer>
 
             <InputContainer>
-            <TextField
-                fullWidth
-                variant="outlined"
-                placeholder="Type your message..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                multiline
-                maxRows={4}
-                aria-label="Message input"
-            />
-            <IconButton
-                color="primary"
-                onClick={handleSendMessage}
-                aria-label="Send message"
-                sx={{
-                backgroundColor: "primary.main",
-                color: "white",
-                "&:hover": {
-                    backgroundColor: "primary.dark"
-                }
-                }}
-            >
-                <SendIcon/>
-            </IconButton>
+                <TextField
+                    fullWidth
+                    variant="outlined"
+                    placeholder="Type your message..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    multiline
+                    maxRows={4}
+                    aria-label="Message input"
+                />
+                <IconButton
+                    color="primary"
+                    onClick={handleSendMessage}
+                    aria-label="Send message"
+                    sx={{
+                        width: 48, // Fixed width
+                        height: 48, // Fixed height
+                        backgroundColor: "primary.main",
+                        color: "white",
+                        "&:hover": {
+                            backgroundColor: "primary.dark"
+                        }
+                    }}
+                >
+                    <SendIcon/>
+                </IconButton>
             </InputContainer>
         </ChatContainer>
 
