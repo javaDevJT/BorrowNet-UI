@@ -1,16 +1,22 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Button, FormControl, FormLabel, MenuItem, Select, InputLabel, Typography, Switch, TextField, Box } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+import { useTheme } from '../components/ThemeContext';
 
 const SettingsPage = () => {
+  const { theme, setTheme } = useTheme();
+
   const initialValues = {
     language: 'en',
-    theme: 'light',
+    theme: theme === 'dark' ? 'dark' : 'light',
     maxDistance: 1,
   };
 
   const handleSubmit = (values) => {
-    console.log('Settings:', values);
+    if (values.theme !== theme) {
+      setTheme(values.theme);
+    }
   };
 
   return (
@@ -73,7 +79,7 @@ const SettingsPage = () => {
             </FormControl>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-              <Button type="submit" variant="contained" color="primary" sx={{ borderRadius: 4 }}>
+              <Button type="submit" variant="contained" color="primary" sx={{ borderRadius: 4 }} startIcon={<SaveIcon />}>
                 Save
               </Button>
             </Box>

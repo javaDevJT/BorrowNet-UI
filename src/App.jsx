@@ -24,7 +24,6 @@ import MyChatsPage from './pages/MyChatsPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
 
 const App = () => {
-
     const store = createStore({
         authName: '_auth',
         authType: 'cookie',
@@ -33,12 +32,13 @@ const App = () => {
     });
 
     const BorrowNetRouter = () => {
-   return (<BrowserRouter>
-        <Routes>
-            <Route path='/login' element={<LoginPage/>}/>
-            <Route path='/registration' element={<RegistrationPage/>}/>
-            <Route element={<AuthOutlet fallbackPath={'/login'}/>}>
-                <Route path='/' element={<MainLayout/>}>
+        return (
+            <BrowserRouter>
+                <Routes>
+                    <Route path='/login' element={<LoginPage/>}/>
+                    <Route path='/registration' element={<RegistrationPage/>}/>
+                    <Route element={<AuthOutlet fallbackPath={'/login'}/>}>
+                    <Route path='/' element={<MainLayout/>}>
                     <Route path='/profile/:id' element={<ProfilePage/>}/>
                     <Route path='/profile/:profileId/rate' element={<RateUserPage/>}/>
                     <Route path='/profile/:profileId/report' element={<ReportUserPage/>}/>
@@ -51,11 +51,12 @@ const App = () => {
                     <Route path='/home' element={<HomePage/>}/>
                     <Route path='/profiles-public' element={<UserProfileList/>}/>
                     <Route path='*' element={<NotFoundPage/>}/>
-                </Route>
-            </Route>
-        </Routes>
-    </BrowserRouter>)
-}
+                    </Route>
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        );
+    };
 
     return <AuthProvider store={store}>
         <BorrowNetRouter/>
