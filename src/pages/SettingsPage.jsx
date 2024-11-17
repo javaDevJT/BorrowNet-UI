@@ -17,6 +17,7 @@ const SettingsPage = () => {
     if (values.theme !== theme) {
       setTheme(values.theme);
     }
+    document.cookie = `maxDistance=${values.maxDistance}; path=/;`;
   };
 
   return (

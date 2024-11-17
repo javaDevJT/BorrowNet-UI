@@ -11,8 +11,6 @@ const HomePage = () => {
   const [totalPages, setTotalPages] = useState(1); // Will be updated based on total posts
   const [sortBy, setSortBy] = useState('id'); // Sorting parameter, default to 'id'
 
-  const authHeader = useAuthHeader();
-
   useEffect(() => {
     fetch(`/api/posts/list?pageNo=${pageNo - 1}&sortBy=${sortBy}`, {
       method: 'GET',
@@ -41,6 +39,8 @@ const HomePage = () => {
   const handlePageChange = (event, value) => {
     setPageNo(value);
   };
+
+  const authHeader = useAuthHeader();
 
   return (
     <React.Fragment>

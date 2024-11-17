@@ -100,7 +100,7 @@ function getAverageRating(ratings) {
     count += 1;
   });
   if (count == 0) {
-    return 'User not yet rated. ';
+    return '';
   }
   return (total / count) + ' ';
 }

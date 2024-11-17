@@ -56,6 +56,9 @@ const LoginPage = () => {
                 email: jwtDecoded['email']
               }
             })
+            if (!document.cookie.split('; ').find(row => row.startsWith('maxDistance='))) {
+              document.cookie = `maxDistance=1; path=/;`;
+            }
             navigate('/home');
           } else {
             throw new Error('No token received');
