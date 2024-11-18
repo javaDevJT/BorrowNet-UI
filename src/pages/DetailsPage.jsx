@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Typography, Avatar, TextField, Button } from '@mui/material';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import { useNavigate } from 'react-router-dom';
 
 const DetailsPage = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const DetailsPage = () => {
   };
 
   const handleBorrow = async () => {
+    const navigate = useNavigate();
     const dataToSend = {
       posting: { id: post.id },
       requester: { id: post.lender },
@@ -42,6 +44,7 @@ const DetailsPage = () => {
 
       const data = await response.json();
       console.log('Request successful:', data);
+      navigate('/my-requests');
     } catch (error) {
       console.error('Error:', error);
     }

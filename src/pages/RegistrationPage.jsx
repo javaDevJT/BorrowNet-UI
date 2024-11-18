@@ -85,7 +85,6 @@ const RegistrationPage = () => {
       } catch (error) {
         console.error('Registration error:', error);
         setShowAlert(true);
-        //alert(error.message || 'Registration failed. Please check your information and try again.');
       }
     },
   });

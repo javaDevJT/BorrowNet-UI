@@ -6,6 +6,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import GroupIcon from '@mui/icons-material/Group';
 import SettingsIcon from '@mui/icons-material/Settings';
+import InboxIcon from '@mui/icons-material/Inbox';
+import OutboxIcon from '@mui/icons-material/Outbox';
 import ChatIcon from '@mui/icons-material/Chat';
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate, useLocation} from 'react-router-dom';
@@ -45,6 +47,14 @@ const MainLayout = () => {
 
   const redirectToSettingsPage = () => {
     navigate('/settings');
+  }
+
+  const redirectToIncomingRequestsPage = () => {
+    navigate('/incoming-requests');
+  }
+
+  const redirectToMyRequestsPage = () => {
+    navigate('/my-requests');
   }
 
   const logOut = () => {
@@ -87,7 +97,7 @@ const MainLayout = () => {
             <ListItemText primary='My Profile' />
           </ListItemButton>
         </ListItem>
-        <ListItem key='7' disablePadding>
+        <ListItem key='3' disablePadding>
           <ListItemButton onClick={redirectToMyChatsPage}>
             <ListItemIcon>
               <ChatIcon />
@@ -95,7 +105,7 @@ const MainLayout = () => {
             <ListItemText primary='My Chats' />
           </ListItemButton>
         </ListItem>
-          <ListItem key='3' disablePadding>
+          <ListItem key='4' disablePadding>
             <ListItemButton onClick={redirectToPublicProfileSelectPage}>
               <ListItemIcon>
                 <GroupIcon />
@@ -103,7 +113,7 @@ const MainLayout = () => {
               <ListItemText primary='Public Profiles' />
             </ListItemButton>
         </ListItem>
-        <ListItem key='4' disablePadding>
+        <ListItem key='5' disablePadding>
           <ListItemButton onClick={redirectToCreatePostingPage}>
             <ListItemIcon>
               <AddToPhotosIcon />
@@ -111,7 +121,23 @@ const MainLayout = () => {
             <ListItemText primary='New Posting' />
           </ListItemButton>
         </ListItem>
-        <ListItem key='5' disablePadding>
+        <ListItem key='6' disablePadding>
+          <ListItemButton onClick={redirectToMyRequestsPage}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary='Incoming Requests' />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key='7' disablePadding>
+          <ListItemButton onClick={redirectToMyRequestsPage}>
+            <ListItemIcon>
+              <OutboxIcon />
+            </ListItemIcon>
+            <ListItemText primary='My Requests' />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key='8' disablePadding>
           <ListItemButton onClick={redirectToSettingsPage}>
             <ListItemIcon>
               <SettingsIcon />
@@ -120,7 +146,7 @@ const MainLayout = () => {
           </ListItemButton>
         </ListItem>
         <Divider />
-        <ListItem key='6' disablePadding>
+        <ListItem key='9' disablePadding>
           <ListItemButton onClick={logOut}>
             <ListItemIcon>
               <LogoutIcon />

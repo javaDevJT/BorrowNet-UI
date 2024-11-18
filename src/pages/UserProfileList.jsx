@@ -1,8 +1,7 @@
 import {Avatar, Box, Card, CardContent, Pagination, Stack, Typography, Alert, Rating} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-import SearchBarComponent from "../components/SearchBarComponent";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -49,7 +48,6 @@ const HomePage = () => {
       )}
       {userList.length > 0 ?
           <Stack>
-            <SearchBarComponent placeholder={"Search Users"} />
             {userList.map((user, index) => (
                 <Link key={index} to={'/profile/' + user.id}>
                 <Card hoverable="true" sx={{borderRadius: 4, my: 1, mx: 5}}>
