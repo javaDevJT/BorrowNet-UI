@@ -1,15 +1,16 @@
 import { Paper, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useNavigate } from 'react-router-dom';
 
 const MyChatsPage = () => {
-    let chatList = [1, 2, 3];
     const navigate = useNavigate();
     const authHeader = useAuthHeader();
-    
+    const authUser = useAuthUser()    
+
     const [showAlert, setShowAlert] = useState(false);
-    const [chatListTest, setUserList] = useState([]);
+    const [chatList, setChatList] = useState([]);
 
     useEffect(() => {
     fetch(`/api/chat`, {
@@ -26,7 +27,16 @@ const MyChatsPage = () => {
         return response.json();
       })
       .then((data) => {
-        setUserList(data.content);
+        const chats = data.map((chat) => ({
+          target: chat.targetUsername,
+          targetId: chat.targetUserId,
+          text: JSON.parse(chat.messagePreview).text, 
+          //time: msg.sendTime
+        }));
+        //console.log(data);
+        setChatList(chats);
+        console.log(chats);
+        console.log(authUser);
       })
       .catch((error) => {
         console.error(error);
@@ -45,11 +55,11 @@ const MyChatsPage = () => {
                     py:2,
                     cursor: 'pointer',
                 }}
-                onClick={() => navigate(`/chat/${elem}`)}
+                onClick={() => navigate(`/chat/${elem.targetId}`)}
 
             >
-                <Typography variant='h5'>John Doe</Typography>
-                <Typography variant='body1' sx={{ color: 'rgba(0, 0, 0, 0.5)' }}>Come stai?</Typography>
+                <Typography variant='h5'>{elem.target}</Typography>
+                <Typography variant='body1' sx={{ color: 'rgba(0, 0, 0, 0.5)' }}>{elem.text}</Typography>
             </Paper>
         ))}
 
