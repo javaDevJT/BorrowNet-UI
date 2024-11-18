@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Box, Typography, Avatar, TextField, Button } from '@mui/material';
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 const DetailsPage = () => {
   const location = useLocation();
   const { post } = location.state;
   const [rentalDays, setRentalDays] = useState(1);
+
+  const authHeader = useAuthHeader();
 
   const handleChange = (event) => {
     const value = parseInt(event.target.value, 10);
@@ -16,9 +19,33 @@ const DetailsPage = () => {
     }
   };
 
-  const handleBorrow = () => {
-    console.log(`Borrowing for ${rentalDays} days`);
-  }
+  const handleBorrow = async () => {
+    const dataToSend = {
+      posting: { id: post.id },
+      requester: { id: post.lender },
+      itemRequestLength: rentalDays,
+    };
+
+    try {
+      const response = await fetch('/api/posts/request', {
+        method: 'POST',
+        headers: {
+          'Authorization': authHeader,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Request successful:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -51,7 +78,7 @@ const DetailsPage = () => {
           sx={{ mb: 2 }}
         />
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-          <Button /*type="submit"*/ onClick={handleBorrow} variant="contained" color="primary" sx={{ borderRadius: 4 }}>
+          <Button type="submit" onClick={handleBorrow} variant="contained" color="primary" sx={{ borderRadius: 4 }}>
             Borrow
           </Button>
         </Box>
