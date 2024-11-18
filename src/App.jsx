@@ -22,6 +22,7 @@ import UserProfileList from "./pages/UserProfileList.jsx";
 import SettingsPage from './pages/SettingsPage.jsx';
 import MyChatsPage from './pages/MyChatsPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
+import DetailsPage from './pages/DetailsPage.jsx';
 
 const App = () => {
     const store = createStore({
@@ -48,6 +49,7 @@ const App = () => {
                     <Route path='/chat/:profileId' element={<ChatPage/>}/>
                     <Route path='/new-post' element={<CreatePostingPage/>}/>
                     <Route path='/settings' element={<SettingsPage/>}/>
+                    <Route path='/details/:id' element={<DetailsPage/>}/>
                     <Route path='/home' element={<HomePage/>}/>
                     <Route path='/profiles-public' element={<UserProfileList/>}/>
                     <Route path='*' element={<NotFoundPage/>}/>

@@ -2,6 +2,7 @@ import { Avatar, Box, Card, CardContent, Pagination, Stack, Typography, Alert } 
 import React, { useEffect, useState } from 'react';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import SearchBarComponent from "../components/SearchBarComponent";
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -53,6 +54,12 @@ const HomePage = () => {
           <Stack>
             <SearchBarComponent postList={postList} setFilteredPostList={setFilteredPostList}/>
             {filteredPostList.map((post, index) => (
+              <Link
+                to={`/details/${post.id}`}
+                key={index}
+                style={{ textDecoration: 'none' }}
+                state={{ post }}
+              >
                 <Card key={index} sx={{borderRadius: 4, my: 1, mx: 5}}>
                   <CardContent>
                     <Box sx={{
@@ -75,6 +82,7 @@ const HomePage = () => {
                     </Box>
                   </CardContent>
                 </Card>
+              </Link>
             ))}
             <Pagination
                 count={totalPages} // Total number of pages based on posts
