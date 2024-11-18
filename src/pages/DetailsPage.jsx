@@ -22,6 +22,7 @@ const DetailsPage = () => {
   };
 
   const { userData, loading, error } = useFetchUserData(post.lender, authHeader);
+  const navigate = useNavigate();
 
   if (loading) {
     return <CircularProgress />;
@@ -32,11 +33,9 @@ const DetailsPage = () => {
   }
 
   const handleBorrow = async () => {
-    const navigate = useNavigate();
     const dataToSend = {
-      posting: { id: post.id },
-      requester: { id: post.lender },
-      itemRequestLength: rentalDays,
+      postingId: post.id,
+      itemRequestLength: rentalDays
     };
 
     try {
