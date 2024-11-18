@@ -1,8 +1,12 @@
 import { useParams } from 'react-router-dom';
-import React, { useState } from "react";
-import {Box, TextField, IconButton, Typography, Avatar, Paper, Container, Snackbar, Alert} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {Box, TextField, IconButton, Typography, Avatar, Paper, Container, Snackbar, Alert, CircularProgress} from "@mui/material";
 import { styled } from "@mui/system";
 import SendIcon from '@mui/icons-material/Send';
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import useFetchUserData from '../components/useFetchUserData';
+
 
 const ChatContainer = styled(Paper)(() => ({
   height: "80vh",
@@ -55,19 +59,54 @@ const InputContainer = styled(Box)({
 const ChatPage = () => {
   const { profileId } = useParams();
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    { id: 1, text: "Hey there!", isOwn: false },
-    { id: 2, text: "Hi! How are you?", isOwn: true },
-    { id: 3, text: "I'm doing great, thanks for asking!", isOwn: false }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [error, setError] = useState(null);
 
-  const handleSendMessage = () => {
+  const authHeader = useAuthHeader();
+  const authUser = useAuthUser();
+
+  const { userData, loading, errorProfileData } = useFetchUserData(profileId, authHeader);
+
+  useEffect(() => {
+    fetch(`/api/chat/${profileId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': authHeader,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const newMessages = data.map((msg, index) => ({
+          id: `${Date.now()}-${index}`,
+          text: JSON.parse(msg.message).text, 
+          isOwn: msg.targetId == profileId,
+          //time: msg.sendTime
+        }));
+    
+        console.log(newMessages);
+        setMessages(newMessages);
+      })
+      .catch((error) => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+  }, []);
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
+  const handleSendMessage = async () => {
     if (!message.trim()) {
       setError("Message cannot be empty");
       return;
     }
-
+  
     if (message.length > 500) {
       setError("Message is too long");
       return;
@@ -78,10 +117,31 @@ const ChatPage = () => {
       text: message,
       isOwn: true
     };
-
-    setMessages([...messages, newMessage]);
-    setMessage("");
+  
+    try {
+      const response = await fetch(`/api/chat/${profileId}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': authHeader,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: message })
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+  
+      const data = await response.json();
+  
+      // Update the messages state with the new message
+      setMessages((prevMessages) => [newMessage, ...prevMessages]);
+      setMessage("");
+    } catch (error) {
+      setError(error.message);
+    }
   };
+  
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
@@ -96,15 +156,15 @@ const ChatPage = () => {
             <Header>
                 <Box display="flex" alignItems="center" gap={2}>
                     <Avatar
-                    src="images.unsplash.com/photo-1494790108377-be9c29b29330"
+                    src={'data:image/JPG;base64,' + userData.userPreferences.profilePicture}
                     alt="User Avatar"
                     />
-                    <Typography variant="h6">Sarah Johnson</Typography>
+                    <Typography variant="h6">{userData.firstName + ' ' + userData.lastName}</Typography>
                 </Box>
             </Header>
 
             <MessageContainer>
-            {messages.map((msg) => (
+            {messages.slice().reverse().map((msg) => (
                 <MessageBubble key={msg.id} isOwn={msg.isOwn}>
                 <Typography>{msg.text}</Typography>
                 </MessageBubble>

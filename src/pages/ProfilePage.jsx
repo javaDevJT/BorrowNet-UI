@@ -36,7 +36,7 @@ const ProfilePage = () => {
     };
 
     const redirectToChatPage = () => {
-      //navigate(`/profile/${id}/report`);
+      navigate(`/chat/${id}`);
     };
 
 
@@ -56,7 +56,6 @@ const ProfilePage = () => {
       <Box>
           <ProfileComponent id={id} firstName={userData.firstName} lastName={userData.lastName} description={userData.userPreferences.profileDescription} profilePicture={'data:image/JPG;base64,' + userData.userPreferences.profilePicture} ratings={userData.ratingsReceived}/>
           <ReviewsComponent/>
-          <PostsComponent/>    
       </Box>
 
     </React.Fragment>
