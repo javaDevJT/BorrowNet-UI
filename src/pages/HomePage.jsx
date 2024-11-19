@@ -1,8 +1,16 @@
-import { Avatar, Box, Card, CardContent, Pagination, Stack, Typography, Alert } from '@mui/material';
+import { Avatar, Box, Card, CardContent, Pagination, Stack, Typography, Alert, CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import SearchBarComponent from "../components/SearchBarComponent";
 import { Link } from 'react-router-dom';
+import useFetchMyData from '../components/useFetchMyData';
+
+
+const setCookie = (name, value, days) => {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString(); // Expiration date in UTC
+  document.cookie = `${name}=${value}; expires=${expires}; path=/`; // Set cookie with path
+};
+
 
 const HomePage = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -11,6 +19,11 @@ const HomePage = () => {
   const [pageNo, setPageNo] = useState(1); // Current page number
   const [totalPages, setTotalPages] = useState(1); // Will be updated based on total posts
   const [sortBy, setSortBy] = useState('id'); // Sorting parameter, default to 'id'
+
+
+  const authHeader = useAuthHeader();
+  
+  const { myData, loading, error } = useFetchMyData(authHeader);
 
   useEffect(() => {
     fetch(`/api/posts/list?pageNo=${pageNo - 1}&sortBy=${sortBy}`, {
@@ -30,6 +43,7 @@ const HomePage = () => {
         setPostList(data.content);
         setFilteredPostList(data.content);
         setTotalPages(data.totalPages);
+
       })
       .catch((error) => {
         console.error(error);
@@ -37,11 +51,28 @@ const HomePage = () => {
       });
     }, [pageNo, sortBy]);
 
+    // Set cookie after myData is loaded
+    useEffect(() => {
+      if (myData?.id) {
+        setCookie('myId', myData.id, 7);
+      }
+    }, [myData]);
+
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
+  if (error) {
+    return <p>Error loading user data: {error.message}</p>;
+  }
+
   const handlePageChange = (event, value) => {
     setPageNo(value);
   };
 
-  const authHeader = useAuthHeader();
+  
+
 
   return (
     <React.Fragment>

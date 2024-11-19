@@ -4,6 +4,12 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useNavigate } from 'react-router-dom';
 
+const getCookie = (name) => {
+  const cookies = document.cookie.split('; ');
+  const cookie = cookies.find((row) => row.startsWith(`${name}=`));
+  return cookie ? cookie.split('=')[1] : null;
+};
+
 const MyChatsPage = () => {
     const navigate = useNavigate();
     const authHeader = useAuthHeader();
@@ -27,13 +33,18 @@ const MyChatsPage = () => {
         return response.json();
       })
       .then((data) => {
-        const chats = data.map((chat) => ({
-          target: chat.targetUsername,
-          targetId: chat.targetUserId,
-          text: JSON.parse(chat.messagePreview).text, 
-          //time: msg.sendTime
-        }));
-        //console.log(data);
+        const myId = getCookie('myId');
+        console.log(data);
+        const chats = data.map((chat) => {
+          const isMyIdSender = chat.senderId == myId; // Check if myId matches senderId
+          return {
+            target: isMyIdSender ? chat.targetUsername : chat.senderUsername,
+            targetId: isMyIdSender ? chat.targetUserId : chat.senderId,
+            text: JSON.parse(chat.messagePreview).text,
+            //time: msg.sendTime          
+          };
+        });
+        
         setChatList(chats);
         console.log(chats);
         console.log(authUser);
