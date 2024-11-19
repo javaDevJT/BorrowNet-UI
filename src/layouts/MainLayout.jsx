@@ -122,7 +122,7 @@ const MainLayout = () => {
           </ListItemButton>
         </ListItem>
         <ListItem key='6' disablePadding>
-          <ListItemButton onClick={redirectToMyRequestsPage}>
+          <ListItemButton onClick={redirectToIncomingRequestsPage}>
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
