@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-import { Alert } from '@mui/material';
+import { Alert, Box, Card, CardContent, Pagination, Stack, Typography } from '@mui/material';
 
 const MyRequestsPage = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -61,8 +61,8 @@ const MyRequestsPage = () => {
                   minHeight: 150
                   }}>
                   <Box sx={{my: 2, mx: 3}}>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {request}
+                    <Typography gutterBottom variant="h5" >
+                      
                     </Typography>
                   </Box>
                 </Box>
