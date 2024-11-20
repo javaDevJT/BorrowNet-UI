@@ -90,7 +90,7 @@ const DetailsPage = () => {
             variant="body1"
             component={Link}
             to={`/profile/${userData.id}`}
-            sx={{ textDecoration: 'underline', color: 'inherit', cursor: 'pointer' }}          >
+            sx={{ textDecoration: 'underline', color: 'inherit', cursor: 'pointer' }}>
             {userData.firstName + ' ' + userData.lastName}
           </Typography>          
         </Box>

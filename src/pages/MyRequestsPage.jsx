@@ -29,6 +29,7 @@ const MyRequestsPage = () => {
       .then((data) => {
         setRequests(data.content);
         setTotalPages(data.totalPages);
+        console.log(requests);
       })
       .catch((error) => {
         console.error(error);
