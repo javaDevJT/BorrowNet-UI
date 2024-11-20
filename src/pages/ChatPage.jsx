@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
-import {Box, TextField, IconButton, Typography, Avatar, Paper, Container, Snackbar, Alert, CircularProgress} from "@mui/material";
+import {Box, TextField, IconButton, Typography, Avatar, Paper, Container, Snackbar, Alert, CircularProgress, Tooltip} from "@mui/material";
 import { styled } from "@mui/system";
 import SendIcon from '@mui/icons-material/Send';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
@@ -82,12 +82,25 @@ const ChatPage = () => {
         return response.json();
       })
       .then((data) => {
-        const newMessages = data.map((msg, index) => ({
-          id: `${Date.now()}-${index}`,
-          text: JSON.parse(msg.message).text, 
-          isOwn: msg.targetId == profileId,
-          //time: msg.sendTime
-        }));
+        const newMessages = data.map((msg, index) => {
+          const date = new Date(msg.sendTime);
+          const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          };
+          const formattedTime = new Intl.DateTimeFormat('en-US', options).format(date);
+        
+          return {
+            id: `${Date.now()}-${index}`,
+            text: JSON.parse(msg.message).text,
+            isOwn: msg.targetId == profileId,
+            time: formattedTime,
+          };
+        });
     
         console.log(newMessages);
         setMessages(newMessages);
@@ -165,9 +178,11 @@ const ChatPage = () => {
 
             <MessageContainer>
             {messages.slice().reverse().map((msg) => (
+              <Tooltip  key={msg.id} title={msg.time} arrow>
                 <MessageBubble key={msg.id} isOwn={msg.isOwn}>
-                <Typography>{msg.text}</Typography>
+                  <Typography>{msg.text}</Typography>
                 </MessageBubble>
+              </Tooltip>
             ))}
             </MessageContainer>
 
