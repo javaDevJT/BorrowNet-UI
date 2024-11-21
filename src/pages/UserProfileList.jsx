@@ -74,9 +74,7 @@ const HomePage = () => {
                           {user.firstName}
                         </Typography>
                         <Typography variant="body2" sx={{color: 'text.secondary', my: 2}}>
-                          {'Average Rating: ' + getAverageRating(user.ratingsReceived)}
-                          <Rating size={'small'} value={Number(getAverageRating(user.ratingsReceived))} readOnly={true}>
-                          </Rating>
+                          {'Average Rating: ' + parseFloat( getAverageRating(user.ratingsReceived)).toFixed(1)}
                         </Typography>
                         <Typography variant="body2" sx={{color: 'text.secondary', my: 2}}>
                           {'Items Posted: ' + user.postings.length}
