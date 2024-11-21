@@ -11,10 +11,10 @@ export const useTheme = () => {
 const CustomThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState('light');
 
-  // Create Material UI theme based on current theme state
-  const muiTheme = createTheme({
+  // Create Material UI themes
+  const muiThemeLight = createTheme({
     palette: {
-      mode: theme,
+      mode: 'light',
       primary: {
         main: '#0052cc',
       },
@@ -23,6 +23,29 @@ const CustomThemeProvider = ({ children }) => {
       },
     },
   });
+
+  const muiThemeDark = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#ffffff',
+      },
+      secondary: {
+        main: '#666363',
+      },
+      background: {
+        default: '#121212',
+        paper: '#1e1e1e',
+      },
+      text: {
+        primary: '#ffffff',
+        secondary: '#ffffff',
+      },
+    },
+  });
+
+  // Select the theme based on the state
+  const muiTheme = theme === 'light' ? muiThemeLight : muiThemeDark;
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

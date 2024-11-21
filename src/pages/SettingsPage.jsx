@@ -39,7 +39,7 @@ const SettingsPage = () => {
                 label="Language"
               >
                 <MenuItem value="en">English</MenuItem>
-                <MenuItem value="es">Spanish</MenuItem>
+                <MenuItem value="it">Italian</MenuItem>
               </Select>
             </FormControl>
 
