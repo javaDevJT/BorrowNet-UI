@@ -3,6 +3,12 @@ import React, { useEffect, useState } from 'react';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { Link } from "react-router-dom";
 
+const getCookie = (name) => {
+  const cookies = document.cookie.split('; ');
+  const cookie = cookies.find((row) => row.startsWith(`${name}=`));
+  return cookie ? cookie.split('=')[1] : null;
+};
+
 const HomePage = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [userList, setUserList] = useState([]);
@@ -11,6 +17,8 @@ const HomePage = () => {
   const [sortBy, setSortBy] = useState('id'); // Sorting parameter, default to 'id'
 
   const authHeader = useAuthHeader();
+
+  const myId = getCookie('myId');
 
   useEffect(() => {
     fetch(`/api/user/public/list?pageNo=${pageNo - 1}&sortBy=${sortBy}`, {
@@ -29,6 +37,7 @@ const HomePage = () => {
       .then((data) => {
         setUserList(data.content);
         setTotalPages(data.totalPages);
+        console.log(data.content);
       })
       .catch((error) => {
         console.error(error);
@@ -48,7 +57,7 @@ const HomePage = () => {
       )}
       {userList.length > 0 ?
           <Stack>
-            {userList.map((user, index) => (
+            {userList.filter((user) => myId != user.id).map((user, index) => (
                 <Link key={index} to={'/profile/' + user.id}>
                 <Card hoverable="true" sx={{borderRadius: 4, my: 1, mx: 5}}>
                   <CardContent >

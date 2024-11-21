@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, CardActionArea, CardContent, CardHeader, CircularProgress, Grid2, Rating, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Avatar, Card, CardActionArea, CardContent, CardHeader, CircularProgress, Grid2, Rating, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useFetchUserData from '../components/useFetchUserData';
@@ -11,9 +11,56 @@ const ReviewsComponent = () => {
     const authHeader = useAuthHeader();
 
     const { userData, loading, error } = useFetchUserData(id, authHeader);
+    const [submittersData, setSubmittersData] = useState({});
+    const [submittersLoading, setSubmittersLoading] = useState(true);
 
+    useEffect(() => {
+      if (userData && userData.ratingsReceived) {
+        const fetchSubmitters = async () => {
+          const submitterIds = userData.ratingsReceived.map(
+            (review) => review.submitter
+          );
+          const uniqueSubmitterIds = [...new Set(submitterIds)];
+  
+          try {
+            const responses = await Promise.all(
+              uniqueSubmitterIds.map((submitterId) =>
+                fetch(`/api/user/public/${submitterId}`, {
+                  headers: {
+                    'Authorization': authHeader,
+                    'Content-Type': 'application/json',
+                  },
+                }).then((response) => {
+                  if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+                })
+              )
+            );
+  
+            const submittersDataMap = {};
+            responses.forEach((data) => {
+              submittersDataMap[data.id] = data;
+            });
+  
+            setSubmittersData(submittersDataMap);
+          } catch (error) {
+            console.error(
+              'There was a problem with the fetch operation:',
+              error
+            );
+          } finally {
+            setSubmittersLoading(false);
+            console.log(submittersData);
+          }
+        };
+  
+        fetchSubmitters();
+      }
+    }, [userData, authHeader, id]);
 
-    if (loading) {
+    if (loading || submittersLoading) {
       return <CircularProgress />;
     }
 
@@ -55,9 +102,21 @@ const ReviewsComponent = () => {
                         sx = {{borderRadius: 4}}
                       >
                         <CardActionArea onClick={() => redirectToProfile(review.submitter)}>
-                            <CardHeader
-                                title={<Rating name="read-only" value={review.rating} readOnly />}                                
-                            />
+                        <CardHeader
+                          avatar={
+                            submittersData[review.submitter] ? (
+                              <Avatar src={'data:image/JPG;base64,' + submittersData[review.submitter].userPreferences.profilePicture} />
+                            ) : (
+                              <Avatar>X</Avatar>
+                            )
+                          }
+                                title={<Rating name="read-only" value={review.rating} readOnly />} 
+                                subheader={
+                                  submittersData[review.submitter]
+                                    ? `${submittersData[review.submitter].firstName} ${submittersData[review.submitter].lastName}`
+                                    : 'Loading...'
+                                }/>
+                                
                             <CardContent>
                                 <Typography>{review.details}</Typography>
                             </CardContent>

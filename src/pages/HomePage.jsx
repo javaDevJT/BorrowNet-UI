@@ -43,6 +43,7 @@ const HomePage = () => {
         setPostList(data.content);
         setFilteredPostList(data.content);
         setTotalPages(data.totalPages);
+        console.log(data.content);
 
       })
       .catch((error) => {
@@ -84,7 +85,7 @@ const HomePage = () => {
       {postList.length > 0 ?
           <Stack>
             <SearchBarComponent postList={postList} setFilteredPostList={setFilteredPostList}/>
-            {filteredPostList.map((post, index) => (
+            {filteredPostList.filter((post) => myData.id !== post.lender).map((post, index) => (
               <Link
                 to={`/details/${post.id}`}
                 key={index}

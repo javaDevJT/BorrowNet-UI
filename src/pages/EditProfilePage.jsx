@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Box, Button, CircularProgress, Paper, TextField, Typography } from '@mui/material';
+import { Alert, Avatar, Box, Button, CircularProgress, Paper, Snackbar, TextField, Typography } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import { styled } from '@mui/material/styles';
 import { deepOrange } from '@mui/material/colors';
@@ -16,6 +16,8 @@ const EditProfilePage = () => {
   const [userPreferencesData, setUserPreferencesData] = useState(null); // State for fetched data
   const [description, setDescription] = useState(''); // State for form description
   const [profileImage, setProfileImage] = useState(''); // State for profile image URL
+  const [error, setError] = useState(null);
+
 
   const navigate = useNavigate();
   const authHeader = useAuthHeader();
@@ -68,6 +70,11 @@ const EditProfilePage = () => {
       profileDescription: description,
       profilePicture: selectedImage || profileImage, // Send base64 string or existing image
     };
+
+    if (profileData.profileDescription.length > 500) {
+      setError("Message is too long");
+      return;
+    }
 
 
     // PATCH request to save updated profile data as JSON
@@ -171,6 +178,15 @@ const EditProfilePage = () => {
       >
         Done
       </Button>
+      <Snackbar
+        open={!!error}
+        autoHideDuration={3000}
+        onClose={() => setError(null)}
+      >
+        <Alert severity="error" onClose={() => setError(null)}>
+        {error}
+        </Alert>
+    </Snackbar>
     </React.Fragment>
   );
 };

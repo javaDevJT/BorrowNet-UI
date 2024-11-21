@@ -59,7 +59,7 @@ const ProfileComponent = ({ id, firstName, lastName, description, profilePicture
             <Typography>Reviews</Typography>
           </Box>
           <Box>
-            <Typography variant='h4'>{averageRating}</Typography>
+            <Typography variant='h4'>{parseFloat(averageRating).toFixed(1)}</Typography>
             <Typography>Rating</Typography>
           </Box>
         </Box>
