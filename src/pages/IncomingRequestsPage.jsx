@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-import { Alert, Avatar, Box, Button, Card, CardContent, Pagination, Paper, Stack, Typography } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Alert, Box, Button, Pagination, Paper, Stack, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const MyRequestsPage = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -14,7 +14,7 @@ const MyRequestsPage = () => {
 
 
   useEffect(() => {
-    fetch(`/api/posts/requests/list?pageNo=${pageNo - 1}&sortBy=${sortBy}`, {
+    fetch(`/api/posts/requests/lender/list?pageNo=${pageNo - 1}&sortBy=${sortBy}`, {
       method: 'GET',
       headers: {
         'Authorization': authHeader,
