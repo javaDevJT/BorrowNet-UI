@@ -8,7 +8,7 @@ const MyRequestsPage = () => {
   const [requests, setRequests] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [sortBy, setSortBy] = useState('postingId');
+  const [sortBy, setSortBy] = useState('id');
 
   const authHeader = useAuthHeader();
 
