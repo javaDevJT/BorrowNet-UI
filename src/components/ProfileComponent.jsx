@@ -4,7 +4,7 @@ import React from 'react';
 
 const ProfileComponent = ({ id, firstName, lastName, description, profilePicture, ratings }) => {
 
-  const averageRating = ratings.length > 0 ? getAverageRating(ratings) : 'N/A';
+  const averageRating = ratings.length > 0 ? parseFloat(getAverageRating(ratings)).toFixed(1) : 'N/A';
 
   return (
     <Box
@@ -59,7 +59,7 @@ const ProfileComponent = ({ id, firstName, lastName, description, profilePicture
             <Typography>Reviews</Typography>
           </Box>
           <Box>
-            <Typography variant='h4'>{parseFloat(averageRating).toFixed(1)}</Typography>
+            <Typography variant='h4'>{averageRating}</Typography>
             <Typography>Rating</Typography>
           </Box>
         </Box>

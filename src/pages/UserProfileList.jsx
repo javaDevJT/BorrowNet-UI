@@ -1,4 +1,4 @@
-import {Avatar, Box, Card, CardContent, Pagination, Stack, Typography, Alert, Rating} from '@mui/material';
+import { Avatar, Box, Card, CardContent, Pagination, Stack, Typography, Alert } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { Link } from "react-router-dom";
@@ -74,7 +74,7 @@ const HomePage = () => {
                           {user.firstName}
                         </Typography>
                         <Typography variant="body2" sx={{color: 'text.secondary', my: 2}}>
-                          {'Average Rating: ' + parseFloat( getAverageRating(user.ratingsReceived)).toFixed(1)}
+                          {'Average Rating: ' + user.ratingsReceived.length > 0 ? parseFloat(getAverageRating(user.ratingsReceived)).toFixed(1) : 'Average Rating: N/A'}
                         </Typography>
                         <Typography variant="body2" sx={{color: 'text.secondary', my: 2}}>
                           {'Items Posted: ' + user.postings.length}
@@ -87,7 +87,7 @@ const HomePage = () => {
                 </Link>
             ))}
             <Pagination
-                count={totalPages} // Total number of pages based on posts
+                count={totalPages}
                 page={pageNo}
                 onChange={handlePageChange}
                 sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px'}}
