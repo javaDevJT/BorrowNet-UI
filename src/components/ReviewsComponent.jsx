@@ -4,6 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useFetchUserData from '../components/useFetchUserData';
 
+
+const getCookie = (name) => {
+  const cookies = document.cookie.split('; ');
+  const cookie = cookies.find((row) => row.startsWith(`${name}=`));
+  return cookie ? cookie.split('=')[1] : null;
+};
+
+
 const ReviewsComponent = () => {
 
     const navigate = useNavigate();
@@ -73,7 +81,13 @@ const ReviewsComponent = () => {
     console.log(reviewsList)
 
     const redirectToProfile = (profileId) => {
-        navigate(`/profile/${profileId}`);
+        const myId = getCookie("myId");
+        if (myId == profileId) {
+          navigate(`/my-profile`);
+        }
+        else {
+          navigate(`/profile/${profileId}`);
+        }
     };
 
       const style = {

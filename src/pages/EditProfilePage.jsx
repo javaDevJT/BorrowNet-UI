@@ -67,7 +67,7 @@ const EditProfilePage = () => {
     // Prepare the data to be sent in the request
     const profileData = {
       borrowDistanceKM: 10.00,
-      profileDescription: description,
+      profileDescription: description ? description : '',
       profilePicture: selectedImage || profileImage, // Send base64 string or existing image
     };
 
