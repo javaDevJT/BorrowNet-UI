@@ -4,6 +4,12 @@ import { Button, FormControl, FormLabel, MenuItem, Select, InputLabel, Typograph
 import SaveIcon from '@mui/icons-material/Save';
 import { useTheme } from '../components/ThemeContext';
 
+const setCookie = (name, value, days) => {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString(); // Expiration date in UTC
+  document.cookie = `${name}=${value}; expires=${expires}; path=/`; // Set cookie with path
+};
+
+
 const SettingsPage = () => {
   const { theme, setTheme } = useTheme();
 
@@ -14,9 +20,11 @@ const SettingsPage = () => {
   };
 
   const handleSubmit = (values) => {
-    if (values.theme !== theme) {
-      setTheme(values.theme);
-    }
+    //if (values.theme !== theme) {
+      //setTheme(values.theme);
+    //}
+    setCookie("theme", values.theme, 7);
+
     document.cookie = `maxDistance=${values.maxDistance}; path=/;`;
   };
 

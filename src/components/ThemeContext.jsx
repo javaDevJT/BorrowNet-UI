@@ -1,7 +1,13 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 
 export const ThemeContext = createContext();
+
+const getCookie = (name) => {
+  const cookies = document.cookie.split('; ');
+  const cookie = cookies.find((row) => row.startsWith(`${name}=`));
+  return cookie ? cookie.split('=')[1] : null;
+};
 
 // Custom hook to use the Theme context
 export const useTheme = () => {
@@ -9,7 +15,19 @@ export const useTheme = () => {
 };
 
 const CustomThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(getCookie('theme') || 'light');
+
+  // Update the theme state if the cookie changes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newTheme = getCookie('theme');
+      if (newTheme && newTheme !== theme) {
+        setTheme(newTheme);
+      }
+    }, 500); // Check for changes every 500ms
+
+    return () => clearInterval(interval);
+  }, [theme]);
 
   // Create Material UI themes
   const muiThemeLight = createTheme({
