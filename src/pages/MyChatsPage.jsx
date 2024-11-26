@@ -40,7 +40,7 @@ const MyChatsPage = () => {
           return {
             target: isMyIdSender ? chat.targetUsername : chat.senderUsername,
             targetId: isMyIdSender ? chat.targetUserId : chat.senderId,
-            text: JSON.parse(chat.messagePreview).text,
+            text: chat.messagePreview.slice(9),
             //time: msg.sendTime          
           };
         });
